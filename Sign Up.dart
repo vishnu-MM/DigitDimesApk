@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login.dart';
@@ -214,15 +214,15 @@ String? gender;
                   Signup(name_v,Gender_v,Age_v,Place_v,Post_v,Pin_v,Email_v,Phone_v,Passwrd_v,CPasswrd_v);
                 }
                   else{
-                    Fluttertoast.showToast(
-                        msg: "PAsswords Missmatch",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0
-                    );
+                    // Fluttertoast.showToast(
+                    //     msg: "PAsswords Missmatch",
+                    //     toastLength: Toast.LENGTH_SHORT,
+                    //     gravity: ToastGravity.CENTER,
+                    //     timeInSecForIosWeb: 1,
+                    //     backgroundColor: Colors.red,
+                    //     textColor: Colors.white,
+                    //     fontSize: 16.0
+                    // );
                   }
 
                 }, child: Text("Sign in"),),

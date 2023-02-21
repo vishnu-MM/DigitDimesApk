@@ -1,11 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const Product());
+  runApp(const Products ());
 }
 
-class Product extends StatelessWidget {
-  const Product({super.key});
+class Products  extends StatelessWidget {
+  const Products ({super.key});
 
   // This widget is the root of your application.
   @override
@@ -26,13 +30,13 @@ class Product extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blueGrey,
       ),
-      home: const ProductPage(title: 'Products'),
+      home: const ProductsPage(title: 'Products'),
     );
   }
 }
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({super.key, required this.title});
+class ProductsPage extends StatefulWidget {
+  const ProductsPage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -46,35 +50,134 @@ class ProductPage extends StatefulWidget {
   final String title;
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _ProductsPageState extends State<ProductsPage> {
+  String ips='192.168.29.66';
 
+  Future<List<Category>> _getNames() async {
+    final pref = await SharedPreferences.getInstance();
+    String ip = pref.getString("ip").toString();
+    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_product"));
+    print("------------------------------hoiiiiiii---------------");
+    print(data);
+    var jsonData = json.decode(data.body);
+    setState(() {
+      ips=ip.toString();
+    });
+
+    print(jsonData);
+    List<Category> clist = [];
+    for (var nn in jsonData["data"]) {
+      Category newname =
+      Category(nn["pid"].toString(),nn["description"].toString(),nn["price"].toString(), nn['product_name'].toString(),nn['photo'].toString());
+      clist.add(newname);
+    }
+    return clist;
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been
-    // optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
     return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the ProductPage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body:ListView(
-          children: [
-            Text("Catagory View"),
-          ],
-        )
+      appBar: AppBar(
+
+        title: Text(widget.title),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(5.0),
+        child: FutureBuilder(
+            future: _getNames(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              print("snapshot" + snapshot.toString());
+              if (snapshot.data == null) {
+                return Container(
+                  child: Center(
+                    child: Text("Loading..."),
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  // padding: EdgeInsets.all(5.0),
+                  // shrinkWrap: true,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      onLongPress: () {
+                        print("long press" + index.toString());
+                      },
+                      title: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              // Text(snapshot.data[index].image),
+
+                              Container(
+                                child: Row(
+                                  children: [
+
+                                     Image(
+                                      width: 100,
+                                      image: NetworkImage(
+                                          "http://"+ips+":5000/"+snapshot.data[index].photo),
+                                    ),
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                          child: Text(snapshot.data[index].product_name ,
+                                            style: TextStyle(
+                                              fontSize: 35,
+
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(snapshot.data[index].description),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                   Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child:  Container(
+                                          width: 75,
+                                          child: Text(snapshot.data[index].price,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
+                    );
+                  },
+                );
+              }
+            }),
+      ),
 
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class Category {
+  late final String pid;
+  late final String product_name;
+  late final String price;
+  late final String description;
+  late final String photo;
+
+  Category(this.pid,this.description,this.price, this.product_name,this.photo);
 }

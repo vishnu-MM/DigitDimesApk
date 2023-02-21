@@ -34,7 +34,7 @@ class Home_user extends StatelessWidget {
       home: const UserHomePage(title: 'Home'),
       routes: {
         "/ViewCatagory":(BuildContext context)=> new CatagoryPage(title: 'Catagory',),
-        "/ViewProduct":(BuildContext context)=>new ProductPage(title: '',),
+        "/ViewProduct":(BuildContext context)=>new ProductsPage(title: ''),
         "/ViewProfile":(BuildContext context)=>new ProfilePage(title: '',),
         "/ViewReview":(BuildContext context)=>new ReviewPage(title: '',),
         "/ViewReply":(BuildContext context)=>new ReplyPage(title: '',),
@@ -101,7 +101,7 @@ class _UserHomePageState extends State<UserHomePage> {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new ProductPage(title: "Product"),
+                  builder: (context) => new ProductsPage(title: "Product"),
                 ),
               );
             },),

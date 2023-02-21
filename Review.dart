@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 void main() {
@@ -54,33 +54,34 @@ class _ReviewPageState extends State<ReviewPage> {
    String status = jsondata['status'];
    if(status=="ok")
    {
-     String lid_s=jsondata["lid"].toString();
-     final prefs = await SharedPreferences.getInstance();
-     prefs.setString("lid", lid_s);
-     Fluttertoast.showToast(
-       msg: "Success",
-       toastLength: Toast.LENGTH_SHORT,
-       gravity: ToastGravity.CENTER,
-       timeInSecForIosWeb: 1,
-       backgroundColor: Colors.blue,
-       textColor: Colors.white,
-       fontSize: 16.0,
-     );
+     // String lid_s=jsondata["lid"].toString();
+     // final prefs = await SharedPreferences.getInstance();
+     // prefs.setString("lid", lid_s);
+     // Fluttertoast.showToast(
+     //   msg: "Success",
+     //   toastLength: Toast.LENGTH_SHORT,
+     //   gravity: ToastGravity.CENTER,
+     //   timeInSecForIosWeb: 1,
+     //   backgroundColor: Colors.blue,
+     //   textColor: Colors.white,
+     //   fontSize: 16.0,
+     // );
 
 
-
+     print("tost");
    }
    else
    {
-     Fluttertoast.showToast(
-       msg: "Status is not ok",
-       toastLength: Toast.LENGTH_SHORT,
-       gravity: ToastGravity.CENTER,
-       timeInSecForIosWeb: 1,
-       backgroundColor: Colors.red,
-       textColor: Colors.white,
-       fontSize: 16.0,
-     );
+     print("tost");
+     // Fluttertoast.showToast(
+     //   msg: "Status is not ok",
+     //   toastLength: Toast.LENGTH_SHORT,
+     //   gravity: ToastGravity.CENTER,
+     //   timeInSecForIosWeb: 1,
+     //   backgroundColor: Colors.red,
+     //   textColor: Colors.white,
+     //   fontSize: 16.0,
+     // );
    }
  }
 

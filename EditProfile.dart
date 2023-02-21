@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Profile.dart';
@@ -61,6 +61,11 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
 
+  _EditProfilePageState(){
+    viewProfile();
+
+  }
+
 
   TextEditingController name = TextEditingController();
   var Gender ;
@@ -92,15 +97,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
     else
     {
-      Fluttertoast.showToast(
-          msg: "Status is not ok",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-      );
+      print("tost");
+      // Fluttertoast.showToast(
+      //     msg: "Status is not ok",
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0,
+      // );
     }
   }
 
@@ -208,4 +214,54 @@ class _EditProfilePageState extends State<EditProfilePage> {
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  viewProfile()
+  async {
+    final pref=await SharedPreferences.getInstance();
+    String ip= pref.getString("ip").toString();
+    String uid=pref.getString("lid").toString();
+    print("-----ip");
+    print(ip);
+    var data = await http.post(Uri.parse("http://"+ip+":5000/and_View_Profile_post"),body: { "lid":uid });
+    var jsondata = json.decode(data.body);
+    print(jsondata);
+
+    String status = jsondata['status'];
+    if(status=="ok")
+    {
+
+      setState(() {
+        name.text=jsondata["Name"].toString();
+        Age.text=jsondata["Age"].toString();
+        gender!=jsondata["Gender"].toString();
+        Place.text=jsondata["Place"].toString();
+        Post.text=jsondata["Post"].toString();
+        Pin.text=jsondata["Pin"].toString();
+        Email.text=jsondata["Email"].toString();
+        Phone.text=jsondata["Phone"].toString();
+      });
+
+
+    }
+    else{
+      print("tost");
+      // Fluttertoast.showToast(
+      //     msg: "Status is not ok",
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0,
+      // );
+    }
+  }
+
+
+
+
+
+
+
+
 }
