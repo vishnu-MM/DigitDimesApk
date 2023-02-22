@@ -45,7 +45,7 @@ class _ReviewPageState extends State<ReviewPage> {
    final pref=await SharedPreferences.getInstance();
    String ip= pref.getString("ip").toString();
    String uid=pref.getString("lid").toString();
-   String pid=pref.getString("pids").toString();
+   String pid=pref.getString("pid_s").toString();
    print("-----ip");
    print(ip);
    var data = await http.post(Uri.parse("http://"+ip+":5000/and_sent_product_review"),body: { "review":R,"user":uid ,"rating":S , "pid":pid});

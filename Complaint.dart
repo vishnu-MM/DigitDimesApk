@@ -44,9 +44,10 @@ async {
   final pref=await SharedPreferences.getInstance();
   String ip= pref.getString("ip").toString();
   String uid=pref.getString("lid").toString();
+  String pid=pref.getString("pid_s").toString();
   print("-----ip");
   print(ip);
-  var data = await http.post(Uri.parse("http://"+ip+":5000/and_sent_complaints"),body: {"complaint":C,"user":uid});
+  var data = await http.post(Uri.parse("http://"+ip+":5000/and_sent_complaints"),body: {"complaint":C,"user":uid,"pid":pid});
   var jsondata = json.decode(data.body);
   print(jsondata);
 
@@ -104,26 +105,62 @@ async {
         title: Text(widget.title),
       ),
       body:
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  child: TextField( controller: Complaint, decoration: InputDecoration( hintText: 'Complaints'),),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(onPressed: (){
-                  String Complaint_v=Complaint.text;
-                  complaint(Complaint_v);
-                }, child: Text("Sent")),
-              )
-                      ],
+        Column(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      child: TextField( controller: Complaint, decoration: InputDecoration( hintText: 'Complaints'),),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(onPressed: (){
+                      String Complaint_v=Complaint.text;
+                      complaint(Complaint_v);
+                    }, child: Text("Sent")),
+                  )
+                          ],
+                        ),
+                      ),
+            SizedBox(
+              child: Column(
+                children: [
+                  Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("User Name",
+                            style: TextStyle(
+                              fontSize: 20
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(250, 8, 8, 10),
+                          child: Text("Date",
+                          style: TextStyle(
+
+                          )),
+                        ),
+                      ],
+                    ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+                  child: Text("Complaint",
+                    style: TextStyle(
+                      fontSize: 30
+                    ),
+                  )
+            ),
+           ], ),
+            ),
+          ],
+        ),
               );
     // This trailing comma makes auto-formatting nicer for build method
   }

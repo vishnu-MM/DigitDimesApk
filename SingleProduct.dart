@@ -203,9 +203,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
                           ),
                         ),
                         onPressed: () async {
-                          String pids=pid.toString();
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setString("pids", pids);
+
                           Navigator.push(
                             context,
                             new MaterialPageRoute(
