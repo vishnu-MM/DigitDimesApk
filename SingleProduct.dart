@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +58,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
   String description='';
   String photo='';
   String ips='';
+  String pids='';
 
 
 
@@ -65,9 +67,11 @@ class _SingleProductPageState extends State<SingleProductPage> {
   async {
     final pref=await SharedPreferences.getInstance();
     String ip= pref.getString("ip").toString();
+    String pid= pref.getString("pid_s").toString();
+
     print("-----ip");
     print(ip);
-    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_View_SingleProduct_post"),body: {  });
+    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_View_SingleProduct_post"),body: { "pid":pid });
     var jsondata = json.decode(data.body);
     print(jsondata);
 
@@ -79,7 +83,6 @@ class _SingleProductPageState extends State<SingleProductPage> {
         Price=jsondata["Price"].toString();
         description=jsondata["description"].toString();
         photo=jsondata["photo"].toString();
-        print(photo);
         ips=ip.toString();
       });
     }
@@ -181,6 +184,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
                         ),
                       ),
                       onPressed: () {
+
                         Navigator.push(
                           context,
                           new MaterialPageRoute(
@@ -198,7 +202,10 @@ class _SingleProductPageState extends State<SingleProductPage> {
                             color: Colors.red,
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          String pids=pid.toString();
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString("pids", pids);
                           Navigator.push(
                             context,
                             new MaterialPageRoute(

@@ -65,14 +65,14 @@ class _ProductsPageState extends State<ProductsPage> {
     final pref = await SharedPreferences.getInstance();
     String ip = pref.getString("ip").toString();
     var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_product"));
-    print("------------------------------hoiiiiiii---------------");
-    print(data);
+    // print("------------------------------hoiiiiiii---------------");
+    // print(data);
     var jsonData = json.decode(data.body);
     setState(() {
       ips=ip.toString();
     });
 
-    print(jsonData);
+    // print(jsonData);
     List<Category> clist = [];
     for (var nn in jsonData["data"]) {
       Category newname =
@@ -96,7 +96,7 @@ class _ProductsPageState extends State<ProductsPage> {
         child: FutureBuilder(
             future: _getNames(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              print("snapshot" + snapshot.toString());
+              // print("snapshot" + snapshot.toString());
               if (snapshot.data == null) {
                 return Container(
                   child: Center(
@@ -112,7 +112,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       onLongPress: () {
-                        print("long press" + index.toString());
+                        print("long press" + index.toString()+" "+snapshot.data[index].pid);
                       },
                       title: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -168,7 +168,10 @@ class _ProductsPageState extends State<ProductsPage> {
                                                   color: Colors.green,
                                                 ),
                                               ),
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                String pid_s=snapshot.data[index].pid;
+                                                final prefs = await SharedPreferences.getInstance();
+                                                prefs.setString("pid_s", pid_s);
 
                                                 Navigator.push(
                                                   context,

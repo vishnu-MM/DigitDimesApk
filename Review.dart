@@ -45,44 +45,17 @@ class _ReviewPageState extends State<ReviewPage> {
    final pref=await SharedPreferences.getInstance();
    String ip= pref.getString("ip").toString();
    String uid=pref.getString("lid").toString();
+   String pid=pref.getString("pids").toString();
    print("-----ip");
    print(ip);
-   var data = await http.post(Uri.parse("http://"+ip+":5000/and_sent_product_review"),body: { "review":R,"user":uid ,"rating":S});
+   var data = await http.post(Uri.parse("http://"+ip+":5000/and_sent_product_review"),body: { "review":R,"user":uid ,"rating":S , "pid":pid});
    var jsondata = json.decode(data.body);
    print(jsondata);
 
    String status = jsondata['status'];
-   if(status=="ok")
-   {
-     // String lid_s=jsondata["lid"].toString();
-     // final prefs = await SharedPreferences.getInstance();
-     // prefs.setString("lid", lid_s);
-     // Fluttertoast.showToast(
-     //   msg: "Success",
-     //   toastLength: Toast.LENGTH_SHORT,
-     //   gravity: ToastGravity.CENTER,
-     //   timeInSecForIosWeb: 1,
-     //   backgroundColor: Colors.blue,
-     //   textColor: Colors.white,
-     //   fontSize: 16.0,
-     // );
-
-
-     print("tost");
-   }
-   else
-   {
-     print("tost");
-     // Fluttertoast.showToast(
-     //   msg: "Status is not ok",
-     //   toastLength: Toast.LENGTH_SHORT,
-     //   gravity: ToastGravity.CENTER,
-     //   timeInSecForIosWeb: 1,
-     //   backgroundColor: Colors.red,
-     //   textColor: Colors.white,
-     //   fontSize: 16.0,
-     // );
-   }
+   setState(() {
+     Review.text='';
+   });
  }
 
   double? _rating;
