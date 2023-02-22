@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'SingleProduct.dart';
 
 void main() {
   runApp(const Products ());
@@ -31,6 +32,10 @@ class Products  extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: const ProductsPage(title: 'Products'),
+      routes: {
+        "/SingleProduct":(BuildContext context)=> new SingleProductPage(title: "SingleProduct"),
+
+      },
     );
   }
 }
@@ -54,7 +59,7 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  String ips='192.168.29.66';
+   String ips='';
 
   Future<List<Category>> _getNames() async {
     final pref = await SharedPreferences.getInstance();
@@ -146,14 +151,35 @@ class _ProductsPageState extends State<ProductsPage> {
 
                                    Padding(
                                         padding: const EdgeInsets.all(10.0),
-                                        child:  Container(
-                                          width: 75,
-                                          child: Text(snapshot.data[index].price,
-                                        style: TextStyle(
-                                          fontSize: 25,
-                                        ),
-                                        ),
+                                        child:  Column(
+                                          children: [
+                                            Container(
+                                              width: 75,
+                                              child: Text(snapshot.data[index].price,
+                                            style: TextStyle(
+                                              fontSize: 28,
+                                            ),
+                                            ),
                                       ),
+                                            TextButton(
+                                              child: Text(
+                                                "Details>>",
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                              onPressed: () {
+
+                                                Navigator.push(
+                                                  context,
+                                                  new MaterialPageRoute(
+                                                    builder: (context) => new SingleProductPage(title: "SingleProduct"),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                     )
                                   ],
                                 ),

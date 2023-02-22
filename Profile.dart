@@ -69,7 +69,6 @@ async {
   String status = jsondata['status'];
   if(status=="ok")
     {
-
       setState(() {
         Name=jsondata["Name"].toString();
         Age=jsondata["Age"].toString();
@@ -80,22 +79,7 @@ async {
         Email=jsondata["Email"].toString();
         Phone=jsondata["Phone"].toString();
       });
-
-
-
     }
-  else{
-    print("tost");
-    // Fluttertoast.showToast(
-    //     msg: "Status is not ok",
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.CENTER,
-    //     timeInSecForIosWeb: 1,
-    //     backgroundColor: Colors.red,
-    //     textColor: Colors.white,
-    //     fontSize: 16.0,
-    // );
-  }
 }
 
 
@@ -135,13 +119,15 @@ async {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-    child: SizedBox(
-    width: (90.0),
-    child:Text("Age")),
-    ), Padding(
+                  child: SizedBox(
+                  width: (90.0),
+                  child:Text("Age")),
+                  ),
+                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Age),
-              )],),
+              )],
+              ),
             ),
             ListTile(
               title: Row(children: [Padding(
@@ -149,7 +135,8 @@ async {
                 child: SizedBox(
                     width: (90.0),
                     child:Text("Gender")),
-              ), Padding(
+              ),
+                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Gender),
               )],),
