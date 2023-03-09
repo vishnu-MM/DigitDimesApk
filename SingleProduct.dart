@@ -226,6 +226,18 @@ class _SingleProductPageState extends State<SingleProductPage> {
                         onPressed: () {},
                       ),
                    ),
+                   Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: OutlinedButton(
+                        child: Text(
+                          "Buy Now",
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                        onPressed: () {},
+                      ),
+                   ),
                    ],),
               ),
               ),

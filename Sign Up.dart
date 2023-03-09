@@ -110,97 +110,165 @@ String? gender;
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the SignUpPage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 50, 30,15 ),
-          child: Column(children: [
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'Name'),
-              controller: name,),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'Age'),
-              controller: Age,),
-            ),
-
-
-            RadioListTile(
-              title: Text("Male"),
-              value: "male",
-              groupValue: gender,
-              onChanged: (value){
-                setState(() {
-                  gender = value.toString();
-                });
-              },
-            ),
-
-            RadioListTile(
-              title: Text("Female"),
-              value: "female",
-              groupValue: gender,
-              onChanged: (value){
-                setState(() {
-                  gender = value.toString();
-                });
-              },
-            ),
-
-
-
-
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'Place'),
-              controller: Place,),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'post'),
-              controller: Post,),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'Pin'),
-              controller: Pin,),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'Email'),
-              controller: Email,),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(decoration: InputDecoration(hintText: 'Phone'),
-              controller: Phone,),
-            ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(decoration: InputDecoration(hintText: 'Password'),
-                controller: Passwrd,),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Colors.purple],
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30, 50, 30,15 ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.app_registration_rounded,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
 
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintText: 'Name',
+                  hintStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.person, color: Colors.white),),
+                  style: TextStyle(color: Colors.white),
+                  controller: name,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintText: 'Age',
+                  hintStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.numbers, color: Colors.white),
+                ),
+                controller: Age,
+                  style: TextStyle(color: Colors.white),
+
+                ),
+              ),
+
+
+              RadioListTile(
+                title: Text("Male",
+                  style: TextStyle(color: Colors.white),
+                ),
+                selectedTileColor: Colors.lightGreenAccent,
+                value: "male",
+                groupValue: gender,
+                onChanged: (value){
+                  setState(() {
+                    gender = value.toString();
+                  });
+                },
+              ),
+
+              RadioListTile(
+                title: Text("Female",
+                  style: TextStyle(color: Colors.white),),
+                value: "female",
+                groupValue: gender,
+                onChanged: (value){
+                  setState(() {
+                    gender = value.toString();
+                  });
+                },
+              ),
+
+
+
+
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.location_pin, color: Colors.white),
+                    hintText: 'Place'),
+                  style: TextStyle(color: Colors.white),
+                  controller: Place,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.location_city_sharp, color: Colors.white),
+                    hintText: 'post'),
+                  style: TextStyle(color: Colors.white),
+                  controller: Post,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.pin, color: Colors.white),
+                    hintText: 'Pin'),
+                  style: TextStyle(color: Colors.white),
+                  controller: Pin,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.mail, color: Colors.white),
+                    hintText: 'Email'),
+                  style: TextStyle(color: Colors.white),
+                  controller: Email,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.phone, color: Colors.white),
+                    hintText: 'Phone'),
+                  style: TextStyle(color: Colors.white),
+                  controller: Phone,),
+              ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(decoration: InputDecoration(hintText: 'Confirm Password'),
-                  controller: CPasswrd,),
-                ),                                                                          
+                  child: TextFormField(decoration: InputDecoration(
+                      hintStyle: TextStyle(color: Colors.white),
+                      prefixIcon: Icon(Icons.password, color: Colors.white),
+                      hintText: 'Password'),
+                    style: TextStyle(color: Colors.white),
+                    controller: Passwrd,),
+                ),
 
-            Padding(padding: EdgeInsets.all(10),
-                child: ElevatedButton(onPressed: (){
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(decoration: InputDecoration(
+                        hintStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(Icons.password, color: Colors.white),
+                        hintText: 'Confirm Password'),
+                      style: TextStyle(color: Colors.white),
+                      controller: CPasswrd,),
+                  ),
 
-                  String Passwrd_v=Passwrd.text;
-                  String CPasswrd_v=CPasswrd.text;
-                  if(CPasswrd_v==Passwrd_v)
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+
+                    String Passwrd_v=Passwrd.text;
+                    String CPasswrd_v=CPasswrd.text;
+                    if(CPasswrd_v==Passwrd_v)
                     {
                       String name_v=name.text;
 
@@ -211,25 +279,53 @@ String? gender;
                       String Pin_v=Pin.text;
                       String Email_v=Email.text;
                       String Phone_v=Phone.text;
-                  Signup(name_v,Gender_v,Age_v,Place_v,Post_v,Pin_v,Email_v,Phone_v,Passwrd_v,CPasswrd_v);
-                }
-                  else{
-                    // Fluttertoast.showToast(
-                    //     msg: "PAsswords Missmatch",
-                    //     toastLength: Toast.LENGTH_SHORT,
-                    //     gravity: ToastGravity.CENTER,
-                    //     timeInSecForIosWeb: 1,
-                    //     backgroundColor: Colors.red,
-                    //     textColor: Colors.white,
-                    //     fontSize: 16.0
-                    // );
-                  }
-
-                }, child: Text("Sign in"),),
-              ),
-
-          ],),
-        )
+                      Signup(name_v,Gender_v,Age_v,Place_v,Post_v,Pin_v,Email_v,Phone_v,Passwrd_v,CPasswrd_v);
+                    }
+                  },
+                  child: Container(
+                    width: 200,
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    elevation: 5,
+                  ),
+                ),
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => new Login(title: "Login"),
+                      ),
+                    );
+                    // Navigate to the sign-up page
+                  },
+                  child: Text(
+                    'Already have an account? Sign Up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+            ],),
+          )
+        ),
       )
        // This trailing comma makes auto-formatting nicer for build methods.
     );

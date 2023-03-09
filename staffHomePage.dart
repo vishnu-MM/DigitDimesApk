@@ -31,10 +31,10 @@ class StaffHome extends StatelessWidget {
       ),
       home: const StaffHomePage(title: 'Home'),
       routes: {
-        "/ViewAssignedOrder":(BuildContext context)=>AssignedOrderPage(title: '',),
-        "/ViewPreviousOrder":(BuildContext context)=>PreviousOredrPage(title: '',),
-        "/ViewStaffProfile":(BuildContext context)=>StaffProfilePage(title: '',),
-        "/ViewRating":(BuildContext context)=>StaffRatingPage(title: '',),
+        "/ViewAssignedOrder":(BuildContext context)=> new AssignedOrderPage(title: '',),
+        "/ViewPreviousOrder":(BuildContext context)=> new PreviousOredrPage(title: '',),
+        "/ViewStaffProfile":(BuildContext context)=> new StaffProfilePage(title: '',),
+        "/ViewRating":(BuildContext context)=> new StaffRatingPage(title: '',),
 
 
       },
@@ -86,20 +86,37 @@ class _StaffHomePageState extends State<StaffHomePage> {
             DrawerHeader(child: Text(" Digit Dimes" , style:TextStyle(fontSize: 35),  ), decoration: BoxDecoration( color: Colors.blueGrey,),),
             ListTile(
               title: Text("Assigned Order") , onTap: (){
-              Navigator.pushNamed(context, "/ViewAssignedOrder");
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) =>  new AssignedOrderPage(title: '',),
+                ),
+              );
             },),
             ListTile(
               title: Text("previous Order") , onTap: (){
-              Navigator.pushNamed(context, "/ViewPreviousOrder");
-            },),
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new PreviousOredrPage(title: " "),
+                ),
+              );            },),
             ListTile(
-              title: Text("profile") , onTap: (){
-              Navigator.pushNamed(context, "/ViewStaffProfile");
-            },),
+              title: Text(" My profile") , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new StaffProfilePage(title: " "),
+                ),
+              );            },),
             ListTile(
               title: Text("Rating") , onTap: (){
-              Navigator.pushNamed(context, "/ViewRating");
-            },),
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new StaffRatingPage(title: " "),
+                ),
+              );            },),
 
           ],
         ),

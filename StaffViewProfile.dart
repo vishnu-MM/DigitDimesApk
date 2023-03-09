@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
 
 void main() {
   runApp(const StaffProfile());
@@ -50,6 +55,11 @@ class StaffProfilePage extends StatefulWidget {
 }
 
 class _StaffProfilePageState extends State<StaffProfilePage> {
+
+  _StaffProfilePageState(){
+    viewProfile();
+  }
+
   String Name='';
   String Age='';
   String Gender='';
@@ -61,6 +71,32 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
   String City='';
 
 
+  viewProfile() async {
+    final pref=await SharedPreferences.getInstance();
+    String ip= pref.getString("ip").toString();
+    String uid=pref.getString("lid").toString();
+    print("-----ip");
+    print(ip);
+    var data = await http.post(Uri.parse("http://"+ip+":5000/staff_View_Profile_post"),body: { "lid":uid });
+    var jsondata = json.decode(data.body);
+    print(jsondata);
+
+    String status = jsondata['status'];
+    if(status=="ok")
+    {
+      setState(() {
+        Name=jsondata["Name"].toString();
+        Age=jsondata["Age"].toString();
+        Gender=jsondata["Gender"].toString();
+        Place=jsondata["Place"].toString();
+        Post=jsondata["Post"].toString();
+        Pin=jsondata["Pin"].toString();
+        Email=jsondata["Email"].toString();
+        Phone=jsondata["Phone"].toString();
+        City=jsondata["City"].toString();
+      });
+    }
+  }
 
 
 
@@ -86,7 +122,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Name :"),
+                child: SizedBox(
+                  width: 90,
+                    child: Text("Name :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Name),
@@ -95,7 +133,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Age :"),
+                child: SizedBox(
+                  width: 90,
+                    child: Text("Age :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Age),
@@ -104,7 +144,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Gender :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("Gender :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Gender),
@@ -113,7 +155,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Place :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("Place :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Place),
@@ -122,7 +166,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Post :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("Post :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Post),
@@ -131,7 +177,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Pin :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("Pin :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Pin),
@@ -140,7 +188,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Email :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("Email :")),
               ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -150,7 +200,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Phone :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("Phone :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(Phone),
@@ -159,7 +211,9 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ListTile(
               title: Row(children: [Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("City :"),
+                child: SizedBox(
+                    width: 90,
+                    child: Text("City :")),
               ), Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(City),

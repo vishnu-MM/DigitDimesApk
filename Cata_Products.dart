@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 import 'SingleProduct.dart';
 
 void main() {
-  runApp(const Products ());
+  runApp(const CataProducts ());
 }
 
-class Products  extends StatelessWidget {
-  const Products ({super.key});
+class CataProducts  extends StatelessWidget {
+  const CataProducts ({super.key});
 
   // This widget is the root of your application.
   @override
@@ -18,7 +18,7 @@ class Products  extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Products',
+      title: 'CataProducts',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -31,7 +31,7 @@ class Products  extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blueGrey,
       ),
-      home: const ProductsPage(title: 'Products'),
+      home: const CataProductsPage(title: 'CataProducts'),
       routes: {
         "/SingleProduct":(BuildContext context)=> new SingleProductPage(title: "SingleProduct"),
 
@@ -40,8 +40,8 @@ class Products  extends StatelessWidget {
   }
 }
 
-class ProductsPage extends StatefulWidget {
-  const ProductsPage({super.key, required this.title});
+class CataProductsPage extends StatefulWidget {
+  const CataProductsPage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -55,16 +55,17 @@ class ProductsPage extends StatefulWidget {
   final String title;
 
   @override
-  State<ProductsPage> createState() => _ProductsPageState();
+  State<CataProductsPage> createState() => _CataProductsPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
+class _CataProductsPageState extends State<CataProductsPage> {
    String ips='';
 
   Future<List<Category>> _getNames() async {
     final pref = await SharedPreferences.getInstance();
     String ip = pref.getString("ip").toString();
-    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_product"));
+    String cid= pref.getString("cid_s").toString();
+    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_Cproduct"), body:{"cid":cid} );
     // print("------------------------------hoiiiiiii---------------");
     // print(data);
     var jsonData = json.decode(data.body);
@@ -111,18 +112,6 @@ class _ProductsPageState extends State<ProductsPage> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      onTap: () async {
-                        String pid_s=snapshot.data[index].pid;
-                        final prefs = await SharedPreferences.getInstance();
-                        prefs.setString("pid_s", pid_s);
-
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) => new SingleProductPage(title: "SingleProduct"),
-                          ),
-                        );
-                      },
                       onLongPress: () {
                         print("long press" + index.toString()+" "+snapshot.data[index].pid);
                       },
@@ -177,7 +166,26 @@ class _ProductsPageState extends State<ProductsPage> {
                                             ),
                                             ),
                                       ),
+                                            TextButton(
+                                              child: Text(
+                                                "Details>>",
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                String pid_s=snapshot.data[index].pid;
+                                                final prefs = await SharedPreferences.getInstance();
+                                                prefs.setString("pid_s", pid_s);
 
+                                                Navigator.push(
+                                                  context,
+                                                  new MaterialPageRoute(
+                                                    builder: (context) => new SingleProductPage(title: "SingleProduct"),
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ],
                                         ),
                                     )

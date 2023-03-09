@@ -1,14 +1,13 @@
-    import 'dart:convert';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Sign Up.dart';
 import 'staffHomePage.dart';
 import 'HomePage.dart';
 import 'main.dart';
-  import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
+
 void main() {
   runApp(const MyApp());
 }
@@ -20,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
 
@@ -50,19 +50,19 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController UserName = TextEditingController();
   TextEditingController Passwrd = TextEditingController();
-Future<void> Login(String u,String p)
-async {
 
-  final pref=await SharedPreferences.getInstance();
-  String ip= pref.getString("ip").toString();
-print("-----ip");
-print(ip);
-  var data = await http.post(Uri.parse("http://"+ip+":5000/and_Login_post"),body: {"name":u,"passwd":p});
-  var jsondata = json.decode(data.body);
-  print(jsondata);
+  Future<void> Login(String u,String p)
+  async {
 
-  String status = jsondata['status'];
-  if(status=="ok")
+    final pref=await SharedPreferences.getInstance();
+    String ip= pref.getString("ip").toString();
+    print("-----ip");
+    print(ip);
+    var data = await http.post(Uri.parse("http://"+ip+":5000/and_Login_post"),body: {"name":u,"passwd":p});
+    var jsondata = json.decode(data.body);
+    print(jsondata);
+    String status = jsondata['status'];
+    if(status=="ok")
     {
       String type = jsondata['type'];
       String lid_s=jsondata["lid"].toString();
@@ -70,119 +70,141 @@ print(ip);
       prefs.setString("lid", lid_s);
 
       if(type=="user")
-        {
-          // Navigator.pushNamed(context, "/UserHome");
-          Navigator.push(
-            context,
-            new MaterialPageRoute(
-              builder: (context) => new UserHomePage(title: "User Home"),
-            ),
-          );
-        }
-      else if(type=="staff")
-        {
-          Navigator.push(
-            context,
-            new MaterialPageRoute(
-              builder: (context) => new StaffHomePage(title: "Staff Home"),
-            ),
-          );
-        }
-      else
-        {
-          // Fluttertoast.showToast(
-          //     msg: "Invalid username or Password",
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 1,
-          //     backgroundColor: Colors.red,
-          //     textColor: Colors.white,
-          //     fontSize: 16.0
-          // );
-        }
-    }
-  else
       {
-        // Fluttertoast.showToast(
-        //     msg: "Invalid username or Password",
-        //     toastLength: Toast.LENGTH_SHORT,
-        //     gravity: ToastGravity.CENTER,
-        //     timeInSecForIosWeb: 1,
-        //     backgroundColor: Colors.red,
-        //     textColor: Colors.white,
-        //     fontSize: 16.0
-        // );
+        // Navigator.pushNamed(context, "/UserHome");
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new UserHomePage(title: "User Home"),
+          ),
+        );
+      }
+      else if(type=="staff")
+      {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new StaffHomePage(title: "Staff Home"),
+          ),
+        );
+      }
+      else
+      {
+        print("Tost");
       }
     }
+    else
+    {
+      print("Tost");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the Login object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 250, 15,1 ),
-            child: Card(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(40,0, 40, 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(decoration: InputDecoration(hintText: 'User Name'),
-                    controller: UserName,),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(decoration: InputDecoration(hintText: 'Password'),
-                    controller: Passwrd,),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(onPressed: () async {
-                      String UserName_v=UserName.text;
-                      String Passwrd_v=Passwrd.text;
-                      Login(UserName_v,Passwrd_v);
-
-
-                    }, child: Text("Login")),
-                  ),
-
-                ],
-              ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Colors.purple],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.shopping_cart_rounded,
+              size: 70,
+              color: Colors.white,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Login',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
               ),
             ),
-        ),
-
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 200, 30, 0),
-                child: ElevatedButton(onPressed: (){  Navigator.push(
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Username',
+                  hintStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.person, color: Colors.white),
+                ),
+                style: TextStyle(color: Colors.white),
+                controller: UserName,
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.lock, color: Colors.white),
+                ),
+                obscureText: true,
+                style: TextStyle(color: Colors.white),
+                controller:Passwrd ,
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async{
+                String UserName_v=UserName.text;
+                String Passwrd_v=Passwrd.text;
+                Login(UserName_v,Passwrd_v);
+              },
+              child: Container(
+                width: 200,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    'LOGIN',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 5,
+              ),
+            ),
+            SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
                   context,
                   new MaterialPageRoute(
                     builder: (context) => new SignUpPage(title: "Signup"),
                   ),
-                );}, child: Text("SignUp")),
+                );
+                // Navigate to the sign-up page
+              },
+              child: Text(
+                'Don\'t have an account? Sign Up',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
               ),
-        ],
-          ),
-          ),
+            ),
+          ],
+        ),
       ),
-
     );
-    // This trailing comma makes auto-formatting nicer for build method
   }
 }

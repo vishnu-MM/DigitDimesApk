@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'Cata_Products.dart';
 
 void main() {
   runApp(const Catagory ());
@@ -31,6 +32,10 @@ class Catagory  extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: const CatagoryPage(title: 'Catagory'),
+      routes:{
+        "/Product":(BuildContext context)=> new CataProductsPage(title: "Product"),
+
+      },
     );
   }
 }
@@ -102,6 +107,17 @@ class _CatagoryPageState extends State<CatagoryPage> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
+                        onTap: () async {
+                          String cid_s=snapshot.data[index].category_id;
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString("cid_s", cid_s);
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                              builder: (context) =>  new CataProductsPage(title: "Product"),
+                            ),
+                          );
+                        },
                         onLongPress: () {
                           print("long press" + index.toString());
                         },
@@ -117,7 +133,8 @@ class _CatagoryPageState extends State<CatagoryPage> {
 
                                      Padding(
                                        padding: const EdgeInsets.all(5.0),
-                                       child: Text(snapshot.data[index].category),
+                                       child: Text(snapshot.data[index].category,
+                                       ),
                                      )
                                     ],
                                   ),
