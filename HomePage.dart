@@ -92,14 +92,16 @@ class _UserHomePageState extends State<UserHomePage> {
                 child: Text(" Digit Dimes",
                   style: TextStyle(
                       fontSize: 50,
-                    color:  Colors.white54,
+                    color:  Colors.teal.withOpacity(0.5),
                       fontWeight: FontWeight.bold,
                   ),
+
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.teal ,
-                // image: DecorationImage(fit: BoxFit.scaleDown, image: MemoryImage(),),
+                color: Colors.white ,
+                image: DecorationImage(fit: BoxFit.fitWidth,
+                    image: NetworkImage("https://p0.pikist.com/photos/467/245/shopping-keyboard-enter-button-shopping-cart-shop-online-web-www.jpg")),
               ),
             ),
             ListTile(

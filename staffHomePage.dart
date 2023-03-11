@@ -83,9 +83,37 @@ class _StaffHomePageState extends State<StaffHomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            DrawerHeader(child: Text(" Digit Dimes" , style:TextStyle(fontSize: 35),  ), decoration: BoxDecoration( color: Colors.blueGrey,),),
+            DrawerHeader(child: Center(
+              child: Text(" Digit Dimes",
+                style: TextStyle(
+                  fontSize: 50,
+                  color:  Colors.teal.withOpacity(0.5),
+                  fontWeight: FontWeight.bold,
+                ),
+
+              ),
+            ),
+              decoration: BoxDecoration(
+                color: Colors.white ,
+                image: DecorationImage(fit: BoxFit.fitWidth,
+                    image: NetworkImage("https://p0.pikist.com/photos/467/245/shopping-keyboard-enter-button-shopping-cart-shop-online-web-www.jpg")),
+              ),),
             ListTile(
-              title: Text("Assigned Order") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.insert_comment_outlined,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Assigned Order",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -94,7 +122,21 @@ class _StaffHomePageState extends State<StaffHomePage> {
               );
             },),
             ListTile(
-              title: Text("previous Order") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.comments_disabled_outlined,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("previous Order",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -102,7 +144,21 @@ class _StaffHomePageState extends State<StaffHomePage> {
                 ),
               );            },),
             ListTile(
-              title: Text(" My profile") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.person_rounded,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(" My profile",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -110,7 +166,21 @@ class _StaffHomePageState extends State<StaffHomePage> {
                 ),
               );            },),
             ListTile(
-              title: Text("Rating") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Rating",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(

@@ -63,8 +63,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
 
 
 
-  viewSingleProduct()
-  async {
+  viewSingleProduct() async {
     final pref=await SharedPreferences.getInstance();
     String ip= pref.getString("ip").toString();
     String pid= pref.getString("pid_s").toString();
@@ -223,7 +222,9 @@ class _SingleProductPageState extends State<SingleProductPage> {
                             color: Colors.green,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+
+                        },
                       ),
                    ),
                    Padding(
@@ -240,6 +241,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
                    ),
                    ],),
               ),
+
               ),
           ],
         )

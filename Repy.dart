@@ -126,51 +126,48 @@ class _ReplyPageState extends State<ReplyPage> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                // Text(snapshot.data[index].image),
-
-                                Container(
-                                  child: Column(
-                                    children: [
-                                    Row( children:[
-                                  Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                    child:
-                                      Text("Date"),
-                                  ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(snapshot.data[index].date_),
-                                    ),
-                                   ]),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                    child:
-                                    Text("Complaint"),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(snapshot.data[index].complaint_),
-                                    ),
-                                  ],
-                                ),
-                        Row(
-                          children: [
-                            Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child:
-                            Text("Reply"),
-                            ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(snapshot.data[index].replay_),
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                        Row( children:[
+                                          Icon(
+                                            Icons.label_important_rounded,
+                                            size: 25,
+                                            color: Colors.teal,
+                                          ),
+                                      Padding(padding: const EdgeInsets.all(3.0),
+                                        child: Text("Date :"),
                                       ),
-                            ]),
+                                        Padding(padding: const EdgeInsets.all(3.0),
+                                          child: Text(snapshot.data[index].date_),
+                                        ),
+                                       ]
+                                      ),
+                                    Row(
+                                      children: [
+                                        Padding(padding: const EdgeInsets.all(8.0),
+                                        child:
+                                        Text("Complaint :"),
+                                        ),
+                                        Padding(padding: const EdgeInsets.all(8.0),
+                                          child: Text(snapshot.data[index].complaint_),
+                                        ),
+                                      ],
+                                    ),
+                                  Row(
+                                      children: [
+                                      Padding(padding: const EdgeInsets.all(8.0),
+                                        child: Text("Reply :"),
+                                      ),
+                                      Padding(padding: const EdgeInsets.all(8.0),
+                                          child: Text(snapshot.data[index].replay_),
+                                        ),
+                                      ]),
 
-                                    ],
-                                  ),
-                                ),
+                                        ],
+                                      ),
+                                    ),
+
                               ],
                             )),
                       );
