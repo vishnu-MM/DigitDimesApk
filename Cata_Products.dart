@@ -29,7 +29,7 @@ class CataProducts  extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const CataProductsPage(title: 'CataProducts'),
       routes: {
@@ -112,6 +112,19 @@ class _CataProductsPageState extends State<CataProductsPage> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
+                      onTap: () async {
+
+                        String pid_s=snapshot.data[index].pid;
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString("pid_s", pid_s);
+
+                            Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                builder: (context) => new SingleProductPage(title: "SingleProduct"),
+                        ),
+                            );
+                      },
                       onLongPress: () {
                         print("long press" + index.toString()+" "+snapshot.data[index].pid);
                       },
@@ -166,26 +179,26 @@ class _CataProductsPageState extends State<CataProductsPage> {
                                             ),
                                             ),
                                       ),
-                                            TextButton(
-                                              child: Text(
-                                                "Details>>",
-                                                style: TextStyle(
-                                                  color: Colors.green,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                String pid_s=snapshot.data[index].pid;
-                                                final prefs = await SharedPreferences.getInstance();
-                                                prefs.setString("pid_s", pid_s);
-
-                                                Navigator.push(
-                                                  context,
-                                                  new MaterialPageRoute(
-                                                    builder: (context) => new SingleProductPage(title: "SingleProduct"),
-                                                  ),
-                                                );
-                                              },
-                                            ),
+                                            // TextButton(
+                                            //   child: Text(
+                                            //     "Details>>",
+                                            //     style: TextStyle(
+                                            //       color: Colors.green,
+                                            //     ),
+                                            //   ),
+                                            //   onPressed: () async {
+                                            //     String pid_s=snapshot.data[index].pid;
+                                            //     final prefs = await SharedPreferences.getInstance();
+                                            //     prefs.setString("pid_s", pid_s);
+                                            //
+                                            //     Navigator.push(
+                                            //       context,
+                                            //       new MaterialPageRoute(
+                                            //         builder: (context) => new SingleProductPage(title: "SingleProduct"),
+                                            //       ),
+                                            //     );
+                                            //   },
+                                            // ),
                                           ],
                                         ),
                                     )

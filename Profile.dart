@@ -21,7 +21,7 @@ class Profile extends StatelessWidget {
       title: 'Profile',
       theme: ThemeData(
 
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const ProfilePage(title: 'Profile'),
       routes: {
@@ -97,120 +97,183 @@ async {
     // than having to individually change instances of widgets.
     return Scaffold(
         appBar: AppBar(
+
           // Here we take the value from the ProfilePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+          title: Text("My Profile"),
         ),
         body:
-        ListView(
-
-          children: [
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: (90.0),
-                    child:Text("Name")),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Name),
-              )],),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                  width: (90.0),
-                  child:Text("Age")),
-                  ),
-                Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Age),
-              )],
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ListView(
+            children: [
+              Icon(
+                Icons.person_rounded,
+                size: 120,
+                color: Colors.black45,
               ),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: (90.0),
-                    child:Text("Gender")),
-              ),
-                Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Gender),
-              )],),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: (90.0),
-                    child:Text("Place")),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Place),
-              )],),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: (90.0),
-                    child:Text("Post")),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Post),
-              )],),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: (90.0),
-                    child:Text("Pin")),
-              ), Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Pin),
-              )],),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
+              ListTile(
+                title: Row(children: [
+                  Padding(
                   padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
+                  child: SizedBox(
                     width: (90.0),
-                    child:Text("Email")),
+                      child:Text("Name",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold
+                        ),
+                      )
+                  ),
+                ), Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Name),
+                )],),
               ),
-               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Email),
-              )],),
-            ),
-            ListTile(
-              title: Row(children: [Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
+              ListTile(
+                title: Row(children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
                     width: (90.0),
-                    child:Text("Phone")),
-              ),Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(Phone),
-              )],),
-              
-            ),
-            ListTile(
-              title: Center(
-                child: ElevatedButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                      builder: (context) => new EditProfilePage(title: "EditProfile"),
+                    child:Text("Age",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold
+                      ),)),
                     ),
-                  );
-                }, child: Text("Edit"),),
+                  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Age),
+                )],
+                ),
               ),
-            )
-          ],
+              ListTile(
+                title: Row(children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: (90.0),
+                      child:Text("Gender",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                ),
+                  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Gender),
+                )],),
+              ),
+              ListTile(
+                title: Row(children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: (90.0),
+                      child:Text("Place",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                ), Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Place),
+                )],),
+              ),
+              ListTile(
+                title: Row(children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: (90.0),
+                      child:Text("Post",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                ), Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Post),
+                )],),
+              ),
+              ListTile(
+                title: Row(children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: (90.0),
+                      child:Text("Pin",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                ), Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Pin),
+                )],),
+              ),
+              ListTile(
+                title: Row(children: [Padding(
+                    padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: (90.0),
+                      child:Text("Email",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                ),
+                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Email),
+                )],),
+              ),
+              ListTile(
+                title: Row(children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: (90.0),
+                      child:Text("Phone",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                        ),)),
+                ),Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(Phone),
+                )],),
+
+              ),
+              ListTile(
+                title: Center(
+                  child: ElevatedButton(onPressed: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => new EditProfilePage(title: "EditProfile"),
+                      ),
+                    );
+                  },child: Container(
+                    width: 200,
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                        'Edit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),style: ElevatedButton.styleFrom(
+                    primary: Colors.teal,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    elevation: 5,
+                  ),
+                  ),
+                ),
+              )
+            ],
+          ),
         )
 
       // This trailing comma makes auto-formatting nicer for build methods.

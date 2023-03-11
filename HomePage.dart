@@ -29,7 +29,7 @@ class Home_user extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const UserHomePage(title: 'Home'),
       routes: {
@@ -76,9 +76,10 @@ class _UserHomePageState extends State<UserHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+
         // Here we take the value from the UserHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("Digit Dimes"),
       ),
       body: Center(
         child: Text("User Home page"),
@@ -86,9 +87,37 @@ class _UserHomePageState extends State<UserHomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            DrawerHeader(child: Text(" Digit Dimes"), decoration: BoxDecoration( color: Colors.blueGrey,), ),
+            DrawerHeader(
+              child: Center(
+                child: Text(" Digit Dimes",
+                  style: TextStyle(
+                      fontSize: 50,
+                    color:  Colors.white54,
+                      fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.teal ,
+                // image: DecorationImage(fit: BoxFit.scaleDown, image: MemoryImage(),),
+              ),
+            ),
             ListTile(
-              title: Text("Catagory") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.category,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Category",style: TextStyle(
+                        fontSize: 18
+                    ),
+                    ),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -97,7 +126,22 @@ class _UserHomePageState extends State<UserHomePage> {
               );
             },),
             ListTile(
-              title: Text("products") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.phone_android,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Products",
+                    style: TextStyle(
+                      fontSize: 18
+                    ),
+                    ),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -106,7 +150,22 @@ class _UserHomePageState extends State<UserHomePage> {
               );
             },),
             ListTile(
-              title: Text("profile") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.person_rounded,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Profile",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),
+                    ),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -115,7 +174,21 @@ class _UserHomePageState extends State<UserHomePage> {
               );
             },),
             ListTile(
-              title: Text("Review") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                  Icons.star,
+                  color: Colors.teal,
+                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Review",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -124,7 +197,20 @@ class _UserHomePageState extends State<UserHomePage> {
               );
             },),
             ListTile(
-              title: Text("Reply") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.message,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Reply",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(
@@ -133,7 +219,20 @@ class _UserHomePageState extends State<UserHomePage> {
               );
             },),
             ListTile(
-              title: Text("Complaints") , onTap: (){
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.error,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Complaints",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
               Navigator.push(
                 context,
                 new MaterialPageRoute(

@@ -29,7 +29,7 @@ class Catagory  extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const CatagoryPage(title: 'Catagory'),
       routes:{
@@ -87,65 +87,84 @@ class _CatagoryPageState extends State<CatagoryPage> {
 
           title: Text(widget.title),
         ),
-        body: Container(
-          padding: EdgeInsets.all(5.0),
-          child: FutureBuilder(
-              future: _getNames(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                print("snapshot" + snapshot.toString());
-                if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                      child: Text("Loading..."),
-                    ),
-                  );
-                } else {
-                  return ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    // padding: EdgeInsets.all(5.0),
-                    // shrinkWrap: true,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onTap: () async {
-                          String cid_s=snapshot.data[index].category_id;
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setString("cid_s", cid_s);
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                              builder: (context) =>  new CataProductsPage(title: "Product"),
-                            ),
-                          );
-                        },
-                        onLongPress: () {
-                          print("long press" + index.toString());
-                        },
-                        title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                // Text(snapshot.data[index].image),
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Container(
+            padding: EdgeInsets.all(5.0),
+            child: FutureBuilder(
+                future: _getNames(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  print("snapshot" + snapshot.toString());
+                  if (snapshot.data == null) {
+                    return Container(
+                      child: Center(
+                        child: Text("Loading..."),
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      // padding: EdgeInsets.all(5.0),
+                      // shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          onTap: () async {
+                            String cid_s=snapshot.data[index].category_id;
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString("cid_s", cid_s);
+                            Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                builder: (context) =>  new CataProductsPage(title: "Product"),
+                              ),
+                            );
+                          },
+                          onLongPress: () {
+                            print("long press" + index.toString());
+                          },
+                          title: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  // Text(snapshot.data[index].image),
 
-                                Container(
-                                  child: Row(
-                                    children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
 
-                                     Padding(
-                                       padding: const EdgeInsets.all(5.0),
-                                       child: Text(snapshot.data[index].category,
-                                       ),
-                                     )
-                                    ],
+                                       Padding(
+                                         padding: const EdgeInsets.all(5.0),
+                                         child: Row(
+                                           children: [
+                                             Icon(
+                                               Icons.label_important_outline,
+                                               size: 20,
+                                               color: Colors.teal,
+                                             ),
+                                             Padding(
+                                               padding: const EdgeInsets.all(8.0),
+                                               child: Text(snapshot.data[index].category,
+                                                   style: TextStyle(
+                                                   fontSize: 18,
+                                                   fontWeight: FontWeight.bold
+                                               ),
+                                               ),
+                                             ),
+                                           ],
+                                         ),
+                                       )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )),
-                      );
-                    },
-                  );
-                }
-              }),
+                                ],
+                              )),
+                        );
+                      },
+                    );
+                  }
+                }),
+          ),
         ),
 
       // This trailing comma makes auto-formatting nicer for build methods.

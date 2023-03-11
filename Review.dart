@@ -20,7 +20,7 @@ class Review extends StatelessWidget {
       title: 'Review',
       theme: ThemeData(
 
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const ReviewPage(title: 'Review'),
     );

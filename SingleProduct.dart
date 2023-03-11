@@ -25,7 +25,7 @@ class SingleProduct extends StatelessWidget {
       title: '',
       theme: ThemeData(
 
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const SingleProductPage(title: ''),
       routes: {

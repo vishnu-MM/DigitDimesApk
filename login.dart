@@ -192,7 +192,6 @@ class _LoginState extends State<Login> {
                     builder: (context) => new SignUpPage(title: "Signup"),
                   ),
                 );
-                // Navigate to the sign-up page
               },
               child: Text(
                 'Don\'t have an account? Sign Up',

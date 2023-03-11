@@ -19,7 +19,7 @@ class Complaint extends StatelessWidget {
       title: 'Complaint',
       theme: ThemeData(
 
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const ComplaintPage(title: 'Complaint'),
     );

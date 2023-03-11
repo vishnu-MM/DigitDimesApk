@@ -22,7 +22,7 @@ class EditProfile extends StatelessWidget {
       title: 'Edit Profile',
       theme: ThemeData(
 
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const EditProfilePage(title: 'Edit Profile'),
       routes: {
