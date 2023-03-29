@@ -68,6 +68,7 @@ class _LoginState extends State<Login> {
       String lid_s=jsondata["lid"].toString();
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("lid", lid_s);
+      print("login time: "+lid_s);
 
       if(type=="user")
       {

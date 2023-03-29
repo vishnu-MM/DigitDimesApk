@@ -64,6 +64,10 @@ class _ProductsPageState extends State<ProductsPage> {
   Future<List<Category>> _getNames() async {
     final pref = await SharedPreferences.getInstance();
     String ip = pref.getString("ip").toString();
+    String uid = pref.getString("lid").toString();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("lid", uid);
+    // print("Product List"+uid);
     var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_product"));
     // print("------------------------------hoiiiiiii---------------");
     // print(data);

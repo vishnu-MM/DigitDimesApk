@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'StaffEditProfile.dart';
 
 
 void main() {
@@ -32,6 +33,10 @@ class StaffProfile extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: const StaffProfilePage(title: 'StaffProfile'),
+      routes: {
+        "/EditProfile":(BuildContext context)=> new EditProfilePage(title: '',),
+
+      },
     );
   }
 }
@@ -115,7 +120,7 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
         appBar: AppBar(
           // Here we take the value from the StaffProfilePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+          title: Text("My Profile"),
         ),
         body:ListView(
           children: [
@@ -221,7 +226,10 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
             ),
             ListTile(
               title: Center(
-                child: ElevatedButton(onPressed: () {  }, child: Text("Edit"),),
+                child: ElevatedButton(onPressed: () {
+                  Navigator.push(context, new MaterialPageRoute(builder: (context) => new EditProfilePage(title: '',),)
+                  );
+                }, child: Text("Edit"),),
               ),
             )
           ],

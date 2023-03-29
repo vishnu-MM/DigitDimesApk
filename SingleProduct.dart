@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 import 'main.dart';
 import 'review.dart';
 import 'Complaint.dart';
+import 'Purchase.dart';
+import 'AddToCart.dart';
 // import 'EditSingleProduct.dart';
 void main() {
   runApp(const SingleProduct());
@@ -35,6 +37,8 @@ class SingleProduct extends StatelessWidget {
       routes: {
          "/Complaint":(BuildContext context)=> new ComplaintPage(title: "Complaint"),
          "/review_":(BuildContext context)=> new ReviewPage(title: "review"),
+         "/Purchase":(BuildContext context)=> new PurchasePage(title: "Purchase"),
+         "/AddToCart":(BuildContext context)=> new AddToCartPage(title: "AddToCart"),
       },
     );
   }
@@ -92,9 +96,6 @@ class _SingleProductPageState extends State<SingleProductPage> {
     }
   }
   //review_
-
-
-
   Future<List<Category>> _getNames() async {
     final pref = await SharedPreferences.getInstance();
     String ip = pref.getString("ip").toString();
@@ -113,6 +114,21 @@ class _SingleProductPageState extends State<SingleProductPage> {
       clist.add(newname);
     }
     return clist;
+  }
+  //Add to cart
+  addToCart()
+  async {
+    final pref=await SharedPreferences.getInstance();
+    String ip= pref.getString("ip").toString();
+    String uid=pref.getString("lid").toString();
+    print("Add to cart :  "+uid);
+    String pid=pref.getString("pid_s").toString();
+    print("-----ip");
+    print(ip);
+    var data = await http.post(Uri.parse("http://"+ip+":5000/and_add_to_cart"),body: { "uid":uid , "pid":pid});
+    var jsondata = json.decode(data.body);
+    print(jsondata);
+    String status = jsondata['status'];
   }
 
 
@@ -377,6 +393,13 @@ class _SingleProductPageState extends State<SingleProductPage> {
                            child: Container(
                              child: ElevatedButton(
                                onPressed: () {
+                                 addToCart();
+                                 Navigator.push(
+                                   context,
+                                   new MaterialPageRoute(
+                                     builder: (context) => new AddToCartPage(title: "AddToCart"),
+                                   ),
+                                 );
                                  // Add your button press logic here
                                },
                                style: ElevatedButton.styleFrom(
@@ -402,7 +425,12 @@ class _SingleProductPageState extends State<SingleProductPage> {
                          child: Container(
                            child: ElevatedButton(
                              onPressed: () {
-                               // Add your button press logic here
+                               Navigator.push(
+                                 context,
+                                 new MaterialPageRoute(
+                                   builder: (context) => new PurchasePage(title: "Purchase"),
+                                 ),
+                               );
                              },
                              style: ElevatedButton.styleFrom(
                                primary: Colors.orange, // Set button

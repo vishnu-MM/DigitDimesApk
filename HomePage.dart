@@ -5,6 +5,7 @@ import 'Profile.dart';
 import 'Review.dart';
 import 'Repy.dart';
 import 'Complaint.dart';
+import 'AddToCart.dart';
 
 void main() {
   runApp(const Home_user());
@@ -39,6 +40,7 @@ class Home_user extends StatelessWidget {
         "/ViewReview":(BuildContext context)=>new ReviewPage(title: '',),
         "/ViewReply":(BuildContext context)=>new ReplyPage(title: '',),
         "/Viewcomplaints":(BuildContext context)=>new ComplaintPage(title: '',),
+        "/AddToCart":(BuildContext context)=>new AddToCartPage(title: '',),
 
       },
     );
@@ -155,6 +157,29 @@ class _UserHomePageState extends State<UserHomePage> {
               title: Row(
                 children: [
                   Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("My cart",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) =>new AddToCartPage(title: '',),
+                ),
+              );
+            },),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
                     Icons.person_rounded,
                     color: Colors.teal,
                   ),
@@ -175,29 +200,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
               );
             },),
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(
-                  Icons.star,
-                  color: Colors.teal,
-                ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Review",
-                      style: TextStyle(
-                          fontSize: 18
-                      ),),
-                  ),
-                ],
-              ) , onTap: (){
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ReviewPage(title: "Review"),
-                ),
-              );
-            },),
+
             ListTile(
               title: Row(
                 children: [
@@ -220,28 +223,28 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
               );
             },),
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(
-                    Icons.error,
-                    color: Colors.teal,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Complaints",style: TextStyle(
-                        fontSize: 18
-                    ),),
-                  ),
-                ],
-              ) , onTap: (){
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ComplaintPage(title: "Complaints"),
-                ),
-              );
-            },),
+            // ListTile(
+            //   title: Row(
+            //     children: [
+            //       Icon(
+            //         Icons.error,
+            //         color: Colors.teal,
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text("Complaints",style: TextStyle(
+            //             fontSize: 18
+            //         ),),
+            //       ),
+            //     ],
+            //   ) , onTap: (){
+            //   Navigator.push(
+            //     context,
+            //     new MaterialPageRoute(
+            //       builder: (context) => new ComplaintPage(title: "Complaints"),
+            //     ),
+            //   );
+            // },),
 
 
           ],
