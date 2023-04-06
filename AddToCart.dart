@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'Purchase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +31,7 @@ class AddToCart extends StatelessWidget {
       ),
       home: const AddToCartPage(title: 'Add To Cart'),
       routes: {
-
+        "/Purchase":(BuildContext context)=> new PurchasePage(title: " "),
 
       },
     );
@@ -190,7 +190,14 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                         child: Row(children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: OutlinedButton(onPressed: (){}, child: Text("Buy Now",
+                                            child: OutlinedButton(onPressed: (){
+                                              Navigator.push(
+                                                context,
+                                                new MaterialPageRoute(
+                                                  builder: (context) => new PurchasePage(title: " "),
+                                                ),
+                                              );
+                                            }, child: Text("Buy Now",
                                             style: TextStyle(
                                               color: Colors.amber,
                                               fontWeight: FontWeight.bold

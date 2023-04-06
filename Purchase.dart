@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:ffi';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -51,26 +55,139 @@ class PurchasePage extends StatefulWidget {
 
 class _PurchasePageState extends State<PurchasePage> {
 
+
+  _PurchasePageState(){
+    viewSingleProduct();
+  }
+
+
+  String Name='';
+  String Price='';
+  String description='';
+  String photo='';
+  String ips='';
+  String pids='';
+  Int? rat;
+
+
+
+
+  viewSingleProduct() async {
+    final pref=await SharedPreferences.getInstance();
+    String ip= pref.getString("ip").toString();
+    String pid= pref.getString("pid_1").toString();
+
+    print("-----ip");
+    print(ip);
+    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_View_SingleProduct_post"),body: { "pid":pid });
+    var jsondata = json.decode(data.body);
+    print(jsondata);
+
+    String status = jsondata['status'];
+    if(status=="ok")
+    {
+      setState(() {
+        Name=jsondata["Name"].toString();
+        Price=jsondata["Price"].toString();
+        description=jsondata["description"].toString();
+        photo=jsondata["photo"].toString();
+        ips=ip.toString();
+      });
+    }
+  }
+
+  int _quantity = 1;
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been
-    // optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-
-        // Here we take the value from the PurchasePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("Buy Now"),
+        title: Text('Purchase'),
       ),
-      body: Center(
-        child: Text("Purchase"),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                Name,
+                style: TextStyle(fontSize: 24.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Image.network(
+                "http://"+ ips +":5000/"+photo,
+                height: 300.0,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Price: '+Price,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Description: \n'+description,
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Quantity',
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.remove),
+                    onPressed: () {
+                      setState(() {
+                        if (_quantity > 1) _quantity--;
+                      });
+                    },
+                  ),
+                  Text(
+                    _quantity.toString(),
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      setState(() {
+                        _quantity++;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-      
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: () {},
+            child: Text('Buy Now'),
+          ),
+        ),
+      ),
     );
   }
 }
+
+
+
+
+
+

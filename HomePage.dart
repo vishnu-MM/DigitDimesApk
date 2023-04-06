@@ -6,6 +6,7 @@ import 'Review.dart';
 import 'Repy.dart';
 import 'Complaint.dart';
 import 'AddToCart.dart';
+import 'CounterFiet.dart';
 
 void main() {
   runApp(const Home_user());
@@ -41,6 +42,7 @@ class Home_user extends StatelessWidget {
         "/ViewReply":(BuildContext context)=>new ReplyPage(title: '',),
         "/Viewcomplaints":(BuildContext context)=>new ComplaintPage(title: '',),
         "/AddToCart":(BuildContext context)=>new AddToCartPage(title: '',),
+        "/CounterFiet":(BuildContext context)=>new CounterFietPage(title: '',),
 
       },
     );
@@ -83,9 +85,65 @@ class _UserHomePageState extends State<UserHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text("Digit Dimes"),
       ),
-      body: Center(
-        child: Text("User Home page"),
-      ),
+       body:
+       Container(
+         margin: EdgeInsets.symmetric(vertical: 8.0),
+         height: 400.0,
+
+         child: ListView(
+           scrollDirection: Axis.horizontal,
+           children: <Widget>[
+             Container(
+               width: 500.0,
+               color: Colors.red,
+             ),
+             Container(
+               width: 500.0,
+               color: Colors.blue,
+             ),
+             Container(
+               width: 500.0,
+               color: Colors.green,
+             ),
+             Container(
+               width: 500.0,
+               color: Colors.yellow,
+             ),
+             Container(
+               width: 500.0,
+               color: Colors.orange,
+             ),
+           ],
+         ),
+       ),
+      // GridView.count(
+      //   // Create a grid with 2 columns. If you change the scrollDirection to
+      //   // horizontal, this produces 2 rows.
+      //   crossAxisCount: 2,
+      //   // Generate 100 widgets that display their index in the List.
+      //   children: List.generate(100, (index) {
+      //     return Center(
+      //       child: Column(
+      //         children: [
+      //           Padding(
+      //             padding: const EdgeInsets.all(8.0),
+      //             child: Image.network("https://previews.123rf.com/images/aquir/aquir1307/aquir130700225/21083720-pending-stamp.jpg",
+      //             height: 150,
+      //               width: 150,
+      //             ),
+      //           ),
+      //           Text(
+      //             'Item $index',
+      //             style: Theme.of(context).textTheme.headlineSmall,
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   }),
+      // ),
+      // Center(
+      //   child: Text("User Home page"),
+      // ),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -223,33 +281,31 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
               );
             },),
-            // ListTile(
-            //   title: Row(
-            //     children: [
-            //       Icon(
-            //         Icons.error,
-            //         color: Colors.teal,
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.all(8.0),
-            //         child: Text("Complaints",style: TextStyle(
-            //             fontSize: 18
-            //         ),),
-            //       ),
-            //     ],
-            //   ) , onTap: (){
-            //   Navigator.push(
-            //     context,
-            //     new MaterialPageRoute(
-            //       builder: (context) => new ComplaintPage(title: "Complaints"),
-            //     ),
-            //   );
-            // },),
-
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.photo_camera_rounded,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Scan Product",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new CounterFietPage(title: '',),
+                ),
+              );
+            },),
 
           ],
         ),
-
       ),
     );
   }

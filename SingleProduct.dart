@@ -424,7 +424,10 @@ class _SingleProductPageState extends State<SingleProductPage> {
                          width: MediaQuery.of(context).size.width*0.48,
                          child: Container(
                            child: ElevatedButton(
-                             onPressed: () {
+                             onPressed: () async {
+                               String pid_1= pid.toString();
+                               final prefs = await SharedPreferences.getInstance();
+                               prefs.setString("pid_1", pid_1);
                                Navigator.push(
                                  context,
                                  new MaterialPageRoute(
