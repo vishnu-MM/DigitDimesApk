@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+
 void main() {
   runApp(const StaffAssigendOrder());
 }
@@ -72,7 +73,7 @@ class _AssignedOrderPageState extends State<AssignedOrderPage> {
     List<ViewAssignedOrder> clist = [];
     for (var nn in jsonData["data"]) {
       ViewAssignedOrder newname =
-      ViewAssignedOrder(nn["naame"].toString(),nn["phone"].toString(),nn["place"].toString(),nn["post"].toString(),nn["pin"].toString(),nn["photo"].toString(),nn["product_name"].toString(),nn["qty"].toString(),nn["price"].toString(),nn["assign_id"].toString(),nn["status"].toString());
+      ViewAssignedOrder(nn["naame"].toString(),nn["phone"].toString(),nn["place"].toString(),nn["post"].toString(),nn["pin"].toString(),nn["product_name"].toString(),nn["qty"].toString(),nn["price"].toString(),nn["assign_id"].toString());
       clist.add(newname);
     }
     return clist;
@@ -148,46 +149,91 @@ class _AssignedOrderPageState extends State<AssignedOrderPage> {
                                   clipBehavior: Clip.antiAlias,
                                   child: Column(
                                     children: [
-                                      ListTile(
-                                        leading: Icon(Icons.arrow_drop_down_circle),
-                                        title: Text(snapshot.data[index].product_name,),
-                                        subtitle: Text(
-                                            "Quantity: "+snapshot.data[index].qty+" Price: "+snapshot.data[index].price,
-                                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text("Delivery Address: \n"
-                                            +"\n Recipient  :"+snapshot.data[index].naame
-                                            +"\n Phone        :"+snapshot.data[index].phone
-                                            +"\n Place         :"+snapshot.data[index].place
-                                            +"\n Post           :"+snapshot.data[index].post
-                                            +"\n PIN             :"+snapshot.data[index].pin,
-                                          style: TextStyle(color: Colors.blue.withOpacity(0.6)),
-                                        ),
-                                      ),
-
-                                      Image.network("http://"+ips+":5000/"+snapshot.data[index].photo),
-                                      ButtonBar(
-                                        alignment: MainAxisAlignment.start,
+                                      Row(
                                         children: [
-                                          ElevatedButton(
-                                            onPressed: () async{
-                                              final pref = await SharedPreferences.getInstance();
-                                              String ip = pref.getString("ip").toString();
-                                              String uid=pref.getString("lid").toString();
-                                              String asid=snapshot.data[index].assign_id;
-                                              var data = await http.post(Uri.parse("http://" + ip + ":5000/update_assigned_order_post"),body: {"asid":asid});
-                                              Navigator.push(context, new MaterialPageRoute(builder: (context)=>StaffAssigendOrder()));
-                                            },
-                                            child: const Text('Mark as Delivered'),
+                                          SizedBox(
+                                            width: 190,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text("User Details",
+                                                      style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: Colors.green,
+                                                      )),
+                                                ),
+
+                                                Text(snapshot.data[index].naame,
+                                                    style: TextStyle(
+                                                      fontSize: 25,
+                                                    )),
+                                                Text(snapshot.data[index].phone,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                                Text(snapshot.data[index].place,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                                Text(snapshot.data[index].post,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                                Text(snapshot.data[index].pin,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 190,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text("Product Details",
+                                                      style: TextStyle(
+                                                          fontSize: 25,
+                                                          color: Colors.green
+                                                      )),
+                                                ),
+                                                Text(snapshot.data[index].product_name,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                                Text(snapshot.data[index].qty,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                                Text(snapshot.data[index].price,
+                                                    style: TextStyle(
+                                                        fontSize: 25
+                                                    )),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
+                                      SizedBox(
+                                          width: 500,
+                                          child: OutlinedButton(onPressed: (){
+                                            id_a=snapshot.data[index].assign_id;
+                                            delivered(id_a);
+                                          }, child: Text("Delivered",
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.blue
+                                            ),
+                                          )
+                                          )
+                                      )
+
                                     ],
+
                                   ),
-                                ),
+                                )
                               ],
                             ),
 
@@ -210,13 +256,11 @@ class ViewAssignedOrder {
   late final place ;
   late final post ;
   late final pin ;
-  late final photo ;
   late final product_name ;
-  late final status ;
   late final qty ;
   late final price ;
   late final assign_id ;
 
-  ViewAssignedOrder(this.naame,this.phone,this.place,this.post,this.pin,this.photo,this.product_name,this.qty,this.price,this.assign_id,this.status);
+  ViewAssignedOrder(this.naame,this.phone,this.place,this.post,this.pin,this.product_name,this.qty,this.price,this.assign_id);
 }
 

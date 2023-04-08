@@ -1,4 +1,9 @@
 import 'dart:convert';
+// import 'package:HomePage.dart';
+// import 'package:digitdimes/DigitDimesApk/PaymentAll.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'HomePage.dart';
+import 'PaymentAll.dart';
 import 'Purchase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,45 +42,6 @@ class AddToCart extends StatelessWidget {
     );
   }
 }
-
-Future<List<Cart>> _getNames() async {
-  final pref = await SharedPreferences.getInstance();
-  String ip = pref.getString("ip").toString();
-  String uid=pref.getString("lid").toString();
-  print("view cart: "+uid);
-  var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_add_to_cart"),body: { "uid":uid });
-  print("------------------------------hoiiiiiii---------------");
-  print(data);
-  var jsonData = json.decode(data.body);
-
-  print(jsonData);
-  List<Cart> clist = [];
-  for (var nn in jsonData["data"]) {
-    Cart newname =
-    Cart( nn['cart_id'].toString(),nn['qty'].toString(),nn['pid'].toString(),nn['product_name'].toString(),nn['price'].toString(),nn['photo'].toString(),);
-    clist.add(newname);
-  }
-  return clist;
-}
-
-
-//remove from cart
-String pid_v='';
-Remove(String pid) async {
-  final pref=await SharedPreferences.getInstance();
-  String ip= pref.getString("ip").toString();
-  String uid=pref.getString("lid").toString();
-  // String pid=pref.getString("pid_s").toString();
-  print("-----ip");
-  print(ip);
-  var data = await http.post(Uri.parse("http://"+ip+":5000/and_remove_cart"),body: {"uid":uid,"pid":pid});
-  var jsondata = json.decode(data.body);
-  print(jsondata);
-  String status = jsondata['status'];
-}
-
-
-
 class AddToCartPage extends StatefulWidget {
   const AddToCartPage({super.key, required this.title});
 
@@ -94,6 +60,55 @@ class AddToCartPage extends StatefulWidget {
   State<AddToCartPage> createState() => _AddToCartPageState();
 }
 
+String ttl="";
+Future<List<Cart>> _getNames() async {
+  final pref = await SharedPreferences.getInstance();
+  String ip = pref.getString("ip").toString();
+  String uid=pref.getString("lid").toString();
+  print("view cart: "+uid);
+  var data = await http.post(Uri.parse("http://" + ip + ":5000/and_view_add_to_cart"),body: { "uid":uid });
+  print("------------------------------hoiiiiiii---------------");
+  print(data);
+  var jsonData = json.decode(data.body);
+  ttl = jsonData["ttl"].toString();
+  print(jsonData);
+  List<Cart> clist = [];
+  for (var nn in jsonData["data"]) {
+    Cart newname =
+    Cart( nn['cart_id'].toString(),nn['qty'].toString(),nn['pid'].toString(),nn['product_name'].toString(),nn['price'].toString(),nn['photo'].toString(),);
+    clist.add(newname);
+  }
+
+  if(ttl=='null'){
+    abcH=0;
+  }else{
+    abcH=60;
+  }
+  return clist;
+}
+double abcH = 0;
+
+
+//remove from cart
+String pid_v='';
+Remove(String pid) async {
+  final pref = await SharedPreferences.getInstance();
+  String ip = pref.getString("ip").toString();
+  String uid = pref.getString("lid").toString();
+  // String pid=pref.getString("pid_s").toString();
+  print("-----ip");
+  print(ip);
+  var data = await http.post(
+      Uri.parse("http://" + ip + ":5000/and_remove_cart"),
+      body: {"uid": uid, "pid": pid});
+  var jsondata = json.decode(data.body);
+  print(jsondata);
+  String status = jsondata['status'];
+}
+
+
+
+
 class _AddToCartPageState extends State<AddToCartPage> {
   @override
   Widget build(BuildContext context) {
@@ -104,6 +119,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
     // optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return Scaffold(
       appBar: AppBar(
 
@@ -131,107 +147,109 @@ class _AddToCartPageState extends State<AddToCartPage> {
                     // shrinkWrap: true,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onLongPress: () {
-                          print("long press" + index.toString());
-                        },
-                        title: Padding(
+                      return Column(
+                        // onLongPress: () {
+                        //   print("long press" + index.toString());
+                        // },
+                        children:[
+                        Container(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  child: Row(
+                                  child: Column(
                                     children: [
-                                      Column(
-                                        children: [
-                                          Row( children:[
-                                            Padding(padding: const EdgeInsets.all(8.0),
-                                              child: Text("Product:", style: TextStyle(
+                                      Table( children:[
+                                        TableRow(
+                                            children:[ Text("Product:", style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold
-                                              ),),
-                                            ),
-                                            Padding(padding: const EdgeInsets.all(8.0),
-                                              child: Text(snapshot.data[index].product_name),
-                                            ),
-                                          ]
-                                          ),
-                                          Row(
-                                            children: [
-                                              Padding(padding: const EdgeInsets.all(8.0),
-                                                child:
-                                                Text("Price :", style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold
-                                                ),),
-                                              ),
-                                              Padding(padding: const EdgeInsets.all(8.0),
-                                                child: Text(snapshot.data[index].price),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                              children: [
-                                                Padding(padding: const EdgeInsets.all(8.0),
-                                                  child: Text("Quantity :", style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight: FontWeight.bold
-                                                  ),),
-                                                ),
-                                                Padding(padding: const EdgeInsets.all(8.0),
-                                                  child: Text(snapshot.data[index].qty),
-                                                ),
-                                              ]),
-
+                                            ),),
+                                              Text(snapshot.data[index].product_name),
+                                            ]),
+                                        // TableRow(padding: const EdgeInsets.all(8.0),
+                                        //   child:
+                                        // ),
+                                      ]
+                                      ),
+                                      Table(
+                                        children: [
+                                          TableRow(children: [
+                                            Text("Price :", style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold
+                                            ),),
+                                            Text(snapshot.data[index].price),
+                                          ]),
                                         ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: OutlinedButton(onPressed: (){
-                                              Navigator.push(
-                                                context,
-                                                new MaterialPageRoute(
-                                                  builder: (context) => new PurchasePage(title: " "),
-                                                ),
-                                              );
-                                            }, child: Text("Buy Now",
-                                            style: TextStyle(
-                                              color: Colors.amber,
-                                              fontWeight: FontWeight.bold
-                                            ),
-                                            )
-                                            ),
-                                          )
-                                        ],),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: OutlinedButton(onPressed: (){
-                                              pid_v=snapshot.data[index].pid;
-                                              Remove(pid_v);
-                                            }, child: Text("Remove",
-                                            style: TextStyle(
-                                              color: Colors.redAccent,
-                                              fontWeight: FontWeight.bold
-                                            ),
-                                            )
-                                            ),
-                                          )
-                                        ],),
-                                      ),
+                                      Table(
+                                          children: [
+                                            TableRow(children: [
+                                              Text("Quantity :", style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),),
+                                              Text(snapshot.data[index].qty),
+                                            ]),
+                                          ]),
+                                      Row(children: [
+                                        Container(
+                                          child: ButtonBar(children: [
+                                            Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 5.0),
+                                                    child: OutlinedButton(onPressed: () async{
+                                                      String pid_s=snapshot.data[index].pid;
+                                                      final prefs = await SharedPreferences.getInstance();
+                                                      prefs.setString("pid_s", pid_s);
+
+                                                      Navigator.push(
+                                                        context,
+                                                        new MaterialPageRoute(
+                                                          builder: (context) => new PurchasePage(title: " "),
+                                                        ),
+
+                                                      );
+                                                    }, child: Text("Buy Now",
+                                                      style: TextStyle(
+                                                          color: Colors.amber,
+                                                          fontWeight: FontWeight.bold
+                                                      ),
+                                                    )
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 5.0),
+                                                    child: OutlinedButton(onPressed: (){
+                                                      pid_v=snapshot.data[index].pid;
+                                                      Remove(pid_v);
+                                                    }, child: Text("Remove",
+                                                      style: TextStyle(
+                                                          color: Colors.redAccent,
+                                                          fontWeight: FontWeight.bold
+                                                      ),
+                                                    )
+                                                    ),
+                                                  )
+                                                ])
+                                          ]),
+                                        )
+                                      ],),
 
                                     ],
+
                                   ),
                                 ),
 
                               ],
-                            )),
+                            ),
+
+                        ),
+                        ]
                       );
                     },
                   );
@@ -239,8 +257,58 @@ class _AddToCartPageState extends State<AddToCartPage> {
               }),
         ),
       ),
+      bottomNavigationBar: Container(child:
+      BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.payment),
+            label: 'Proceed to pay',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.delete),
+            label: 'Clear',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+        height: abcH,
+      ),
+
 
     );
+  }
+  double _bottomBarOffset = 0;
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() async {
+      _selectedIndex = index;
+      if(_selectedIndex==0){
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new PaymentAll(title: "Payment"),
+          ),
+
+        );
+      }else if(_selectedIndex==1){
+
+        final pref=await SharedPreferences.getInstance();
+        // String ip = "192.168.29.66";
+        String ip= pref.getString("ip").toString();
+        String lid= pref.getString("lid").toString();
+        var data = await http.post(Uri.parse("http://"+ip+":5000/and_clear_Cart"),body: {"uid":lid});
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new UserHomePage(title: 'Home'),
+          ),
+
+        );
+        Fluttertoast.showToast(msg: 'Cart Cleared');
+      }
+    });
   }
 }
 class Cart{

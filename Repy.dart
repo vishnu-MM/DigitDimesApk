@@ -1,3 +1,5 @@
+import 'package:digitdimes/Complaint.dart';
+import 'package:digitdimes/SendComplaint.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -169,7 +171,8 @@ class _ReplyPageState extends State<ReplyPage> {
                                     ),
 
                               ],
-                            )),
+                            )
+                        ),
                       );
                     },
                   );

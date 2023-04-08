@@ -6,6 +6,7 @@ import 'dart:io';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -129,6 +130,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
     var jsondata = json.decode(data.body);
     print(jsondata);
     String status = jsondata['status'];
+    Fluttertoast.showToast(msg: 'Product added to cart');
   }
 
 
@@ -269,7 +271,9 @@ class _SingleProductPageState extends State<SingleProductPage> {
                                                                     fontWeight: FontWeight.w400
                                                                 ),
                                                               ),
-                                                            ), Padding(
+                                                            ),
+
+                                                            Padding(
                                                               padding: const EdgeInsets.all(4.0),
                                                               child: Text(snapshot.data[index].date,
                                                                 style: TextStyle(
@@ -394,12 +398,12 @@ class _SingleProductPageState extends State<SingleProductPage> {
                              child: ElevatedButton(
                                onPressed: () {
                                  addToCart();
-                                 Navigator.push(
-                                   context,
-                                   new MaterialPageRoute(
-                                     builder: (context) => new AddToCartPage(title: "AddToCart"),
-                                   ),
-                                 );
+                                 // Navigator.push(
+                                 //   context,
+                                 //   new MaterialPageRoute(
+                                 //     builder: (context) => new AddToCartPage(title: "AddToCart"),
+                                 //   ),
+                                 // );
                                  // Add your button press logic here
                                },
                                style: ElevatedButton.styleFrom(

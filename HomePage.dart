@@ -1,3 +1,5 @@
+import 'package:digitdimes/ViewMyOrders.dart';
+import 'package:digitdimes/ks.dart';
 import 'package:flutter/material.dart';
 import 'Catagory.dart';
 import 'Products.dart';
@@ -7,6 +9,7 @@ import 'Repy.dart';
 import 'Complaint.dart';
 import 'AddToCart.dart';
 import 'CounterFiet.dart';
+import 'Complaint.dart';
 
 void main() {
   runApp(const Home_user());
@@ -43,6 +46,7 @@ class Home_user extends StatelessWidget {
         "/Viewcomplaints":(BuildContext context)=>new ComplaintPage(title: '',),
         "/AddToCart":(BuildContext context)=>new AddToCartPage(title: '',),
         "/CounterFiet":(BuildContext context)=>new CounterFietPage(title: '',),
+        "/Complaint":(BuildContext context)=>ComplaintPage(title: 'Complaint'),
 
       },
     );
@@ -85,37 +89,37 @@ class _UserHomePageState extends State<UserHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text("Digit Dimes"),
       ),
-       body:
-       Container(
-         margin: EdgeInsets.symmetric(vertical: 8.0),
-         height: 400.0,
-
-         child: ListView(
-           scrollDirection: Axis.horizontal,
-           children: <Widget>[
-             Container(
-               width: 500.0,
-               color: Colors.red,
-             ),
-             Container(
-               width: 500.0,
-               color: Colors.blue,
-             ),
-             Container(
-               width: 500.0,
-               color: Colors.green,
-             ),
-             Container(
-               width: 500.0,
-               color: Colors.yellow,
-             ),
-             Container(
-               width: 500.0,
-               color: Colors.orange,
-             ),
-           ],
-         ),
-       ),
+       body: Center(child: Text("Welcome")),
+       // Container(
+       //   margin: EdgeInsets.symmetric(vertical: 8.0),
+       //   height: 400.0,
+       //
+       //   child: ListView(
+       //     scrollDirection: Axis.horizontal,
+       //     children: <Widget>[
+       //       Container(
+       //         width: 500.0,
+       //         color: Colors.red,
+       //       ),
+       //       Container(
+       //         width: 500.0,
+       //         color: Colors.blue,
+       //       ),
+       //       Container(
+       //         width: 500.0,
+       //         color: Colors.green,
+       //       ),
+       //       Container(
+       //         width: 500.0,
+       //         color: Colors.yellow,
+       //       ),
+       //       Container(
+       //         width: 500.0,
+       //         color: Colors.orange,
+       //       ),
+       //     ],
+       //   ),
+       // ),
       // GridView.count(
       //   // Create a grid with 2 columns. If you change the scrollDirection to
       //   // horizontal, this produces 2 rows.
@@ -183,7 +187,7 @@ class _UserHomePageState extends State<UserHomePage> {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new CatagoryPage(title: "Catagory"),
+                  builder: (context) => new CatagoryPage(title: "Category"),
                 ),
               );
             },),
@@ -299,10 +303,55 @@ class _UserHomePageState extends State<UserHomePage> {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new CounterFietPage(title: '',),
+                  builder: (context) => new CounFeit(),
                 ),
               );
             },),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.bookmark_border,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("My Orders",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ViewMyOrders(),
+                ),
+              );
+            },),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.comments_disabled_outlined,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Complaint ",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ComplaintPage(title: 'Complaint'),
+                ),
+              );
+            },),
+
 
           ],
         ),

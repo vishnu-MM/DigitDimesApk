@@ -7,11 +7,11 @@ import 'package:http/http.dart' as http;
 
 
 void main() {
-  runApp(const StaffPreviousOrder());
+  runApp(const DeliveryStatus());
 }
 
-class StaffPreviousOrder extends StatelessWidget {
-  const StaffPreviousOrder({super.key});
+class DeliveryStatus extends StatelessWidget {
+  const DeliveryStatus({super.key});
 
   // This widget is the root of your application.
   @override
@@ -19,7 +19,7 @@ class StaffPreviousOrder extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AssignedOrder',
+      title: 'DeliveryStatus',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,13 +32,13 @@ class StaffPreviousOrder extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blueGrey,
       ),
-      home: const PreviousOredrPage(title: 'AssignedOrder'),
+      home: const DeliveryStatusPage(title: 'DeliveryStatus'),
     );
   }
 }
 
-class PreviousOredrPage extends StatefulWidget {
-  const PreviousOredrPage({super.key, required this.title});
+class DeliveryStatusPage extends StatefulWidget {
+  const DeliveryStatusPage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -52,17 +52,18 @@ class PreviousOredrPage extends StatefulWidget {
   final String title;
 
   @override
-  State<PreviousOredrPage> createState() => _PreviousOredrPageState();
+  State<DeliveryStatusPage> createState() => _DeliveryStatusPageState();
 }
 
-class _PreviousOredrPageState extends State<PreviousOredrPage> {
+class _DeliveryStatusPageState extends State<DeliveryStatusPage> {
   String ips='';
   String id_a='';
   Future<List<ViewPreviousOrder>> _getNames() async {
     final pref = await SharedPreferences.getInstance();
     String ip = pref.getString("ip").toString();
     String uid=pref.getString("lid").toString();
-    var data = await http.post(Uri.parse("http://" + ip + ":5000/View_previous_order"),body: {"lid":uid});
+    String oid=pref.getString("oid").toString();
+    var data = await http.post(Uri.parse("http://" + ip + ":5000/and_Delivary_status"),body: {"oid":oid});
     print("------------------------------hoiiiiiii---------------");
     print(data);
     var jsonData = json.decode(data.body);
@@ -74,33 +75,11 @@ class _PreviousOredrPageState extends State<PreviousOredrPage> {
     List<ViewPreviousOrder> clist = [];
     for (var nn in jsonData["data"]) {
       ViewPreviousOrder newname =
-      ViewPreviousOrder(nn["naame"].toString(),nn["phone"].toString(),nn["place"].toString(),nn["post"].toString(),nn["pin"].toString(),nn["photo"].toString(),nn["product_name"].toString(),nn["qty"].toString(),nn["price"].toString(),nn["assign_id"].toString());
+      ViewPreviousOrder(nn["naame"].toString(),nn["phone"].toString(),nn["place"].toString(),nn["post"].toString(),nn["pin"].toString(),nn["photo"].toString(),nn["product_name"].toString(),nn["qty"].toString(),nn["price"].toString(),nn["assign_id"].toString(),nn["order_id"].toString());
       clist.add(newname);
     }
     return clist;
   }
-
-  //Update status
-  // delivered(String ida) async {
-  //   final pref=await SharedPreferences.getInstance();
-  //   String ip= pref.getString("ip").toString();
-  //   String uid=pref.getString("lid").toString();
-  //   String pid=pref.getString("pid_s").toString();
-  //   print("-----ip");
-  //   print(ip);
-  //   var data = await http.post(Uri.parse("http://"+ip+":5000/update_assigned_order_post"),body: {"id":ida});
-  //   var jsondata = json.decode(data.body);
-  //   print(jsondata);
-  //
-  //   String status = jsondata['status'];
-  //   if(status=="ok")
-  //   {
-  //     String lid_s=jsondata["lid"].toString();
-  //     final prefs = await SharedPreferences.getInstance();
-  //     prefs.setString("lid", lid_s);
-  //   }
-  // }
-
 
 
 
@@ -115,7 +94,7 @@ class _PreviousOredrPageState extends State<PreviousOredrPage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the PreviousOredrPage object that was created by
+        // Here we take the value from the DeliveryStatusPage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
@@ -216,7 +195,8 @@ class ViewPreviousOrder {
   late final qty ;
   late final price ;
   late final assign_id ;
+  late final order_id;
 
-  ViewPreviousOrder(this.naame,this.phone,this.place,this.post,this.pin,this.photo,this.product_name,this.qty,this.price,this.assign_id);
+  ViewPreviousOrder(this.naame,this.phone,this.place,this.post,this.pin,this.photo,this.product_name,this.qty,this.price,this.assign_id,this.order_id);
 }
 

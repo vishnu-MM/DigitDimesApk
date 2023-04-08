@@ -96,7 +96,7 @@ class _ProductsPageState extends State<ProductsPage> {
         title: Text(widget.title),
       ),
       body: Container(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(1.0),
         child: FutureBuilder(
             future: _getNames(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -114,7 +114,9 @@ class _ProductsPageState extends State<ProductsPage> {
                   // shrinkWrap: true,
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
+                    return Card(child:
+
+                      ListTile(
                       onTap: () async {
                         String pid_s=snapshot.data[index].pid;
                         final prefs = await SharedPreferences.getInstance();
@@ -141,7 +143,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                   children: [
 
                                      Image(
-                                      width: 100,
+                                      width: 70,
                                       image: NetworkImage(
                                           "http://"+ips+":5000/"+snapshot.data[index].photo),
                                     ),
@@ -190,6 +192,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               ),
                             ],
                           )),
+                    ),
                     );
                   },
                 );

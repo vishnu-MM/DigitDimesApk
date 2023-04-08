@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'Payment.dart';
+// import 'package:digitdimes/DigitDimesApk/Payment.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +31,7 @@ class Purchase extends StatelessWidget {
       ),
       home: const PurchasePage(title: 'Home'),
       routes: {
-
+        "/payment":((BuildContext context) => const Payment(title: 'Payment',)),
       },
     );
   }
@@ -67,6 +69,7 @@ class _PurchasePageState extends State<PurchasePage> {
   String photo='';
   String ips='';
   String pids='';
+  String lids='';
   Int? rat;
 
 
@@ -75,8 +78,9 @@ class _PurchasePageState extends State<PurchasePage> {
   viewSingleProduct() async {
     final pref=await SharedPreferences.getInstance();
     String ip= pref.getString("ip").toString();
-    String pid= pref.getString("pid_1").toString();
-
+    String pid= pref.getString("pid_s").toString();
+    String uid=pref.getString("lid").toString();
+    lids=uid;
     print("-----ip");
     print(ip);
     var data = await http.post(Uri.parse("http://" + ip + ":5000/and_View_SingleProduct_post"),body: { "pid":pid });
@@ -177,7 +181,12 @@ class _PurchasePageState extends State<PurchasePage> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () async{
+              final prefs = await SharedPreferences.getInstance();
+              prefs.setString("pqty", _quantity.toString());
+              prefs.setString("lid", lids);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>new Payment(title: 'Payment'),),);
+            },
             child: Text('Buy Now'),
           ),
         ),

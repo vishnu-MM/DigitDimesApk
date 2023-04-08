@@ -224,14 +224,6 @@ class _StaffProfilePageState extends State<StaffProfilePage> {
                 child: Text(City),
               )],),
             ),
-            ListTile(
-              title: Center(
-                child: ElevatedButton(onPressed: () {
-                  Navigator.push(context, new MaterialPageRoute(builder: (context) => new EditProfilePage(title: '',),)
-                  );
-                }, child: Text("Edit"),),
-              ),
-            )
           ],
         )
 

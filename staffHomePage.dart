@@ -1,3 +1,4 @@
+// import 'package:digitdimes/DigitDimesApk/StaffViewRating.dart';
 import 'package:flutter/material.dart';
 import 'StaffViewAssignedOrder.dart';
 import 'StaffViewPreviousOrder.dart';
@@ -34,7 +35,7 @@ class StaffHome extends StatelessWidget {
         "/ViewAssignedOrder":(BuildContext context)=> new AssignedOrderPage(title: '',),
         "/ViewPreviousOrder":(BuildContext context)=> new PreviousOredrPage(title: '',),
         "/ViewStaffProfile":(BuildContext context)=> new StaffProfilePage(title: '',),
-        "/ViewRating":(BuildContext context)=> new StaffRatingPage(title: '',),
+        "/ViewRating":(BuildContext context)=> new StaffViewRating(),
 
 
       },
@@ -184,7 +185,7 @@ class _StaffHomePageState extends State<StaffHomePage> {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new StaffRatingPage(title: " "),
+                  builder: (context) => new StaffViewRating(),
                 ),
               );            },),
 
