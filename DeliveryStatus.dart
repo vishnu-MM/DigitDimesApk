@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:digitdimes/StaffViewRating.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +30,7 @@ class DeliveryStatus extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.teal,
       ),
       home: const DeliveryStatusPage(title: 'DeliveryStatus'),
     );
@@ -64,24 +64,40 @@ class _DeliveryStatusPageState extends State<DeliveryStatusPage> {
     String uid=pref.getString("lid").toString();
     String oid=pref.getString("oid").toString();
     var data = await http.post(Uri.parse("http://" + ip + ":5000/and_Delivary_status"),body: {"oid":oid});
-    print("------------------------------hoiiiiiii---------------");
-    print(data);
     var jsonData = json.decode(data.body);
     setState(() {
       ips=ip.toString();
     });
 
-    print(jsonData);
+
     List<ViewPreviousOrder> clist = [];
     for (var nn in jsonData["data"]) {
       ViewPreviousOrder newname =
-      ViewPreviousOrder(nn["naame"].toString(),nn["phone"].toString(),nn["place"].toString(),nn["post"].toString(),nn["pin"].toString(),nn["photo"].toString(),nn["product_name"].toString(),nn["qty"].toString(),nn["price"].toString(),nn["assign_id"].toString(),nn["order_id"].toString());
+      ViewPreviousOrder(nn["phone"].toString(),nn["status"].toString(),nn["photo"].toString(),nn["product_name"].toString(),nn["price"].toString(),nn["sname"].toString(),nn["email"].toString(),nn["assign_id"].toString());
       clist.add(newname);
     }
     return clist;
   }
 
+  TextEditingController Review = TextEditingController();
 
+  review(String Rv, R,S)
+  async {
+    final pref=await SharedPreferences.getInstance();
+    String ip= pref.getString("ip").toString();
+    String uid=pref.getString("lid").toString();
+    String pid=pref.getString("pid_s").toString();
+    var data = await http.post(Uri.parse("http://"+ip+":5000/and_Delivary_rating"),body: { "assignid":R,"review":Rv,"rating":S });
+    var jsondata = json.decode(data.body);
+    String status = jsondata['status'];
+    setState(() {
+      Review.text='';
+    });
+  }
+  String asid='';
+  String Review_v='';
+  double? _rating;
+  IconData? _selectedIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -131,40 +147,85 @@ class _DeliveryStatusPageState extends State<DeliveryStatusPage> {
                                   children: [
                                     ListTile(
                                       leading: Icon(Icons.arrow_drop_down_circle),
-                                      title: Text(snapshot.data[index].product_name,),
+                                      title: Text(snapshot.data[index].status,
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                      ),
                                       subtitle: Text(
-                                        "Quantity: "+snapshot.data[index].qty+" Price: "+snapshot.data[index].price,
-                                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                        "Product: "+snapshot.data[index].product_name+" Price: "+snapshot.data[index].price,
+                                        style: TextStyle(color: Colors.black.withOpacity(0.6), fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(16.0),
-                                      child: Text("Delivery Address: \n"
-                                          +"\n Recipient  :"+snapshot.data[index].naame
-                                          +"\n Phone        :"+snapshot.data[index].phone
-                                          +"\n Place         :"+snapshot.data[index].place
-                                          +"\n Post           :"+snapshot.data[index].post
-                                          +"\n PIN             :"+snapshot.data[index].pin,
-                                        style: TextStyle(color: Colors.blue.withOpacity(0.6)),
+                                      child: Column(
+                                        children: [
+                                          Text("Delivery Staff Details"),
+                                          Text(
+                                              "\n Staff    : "+snapshot.data[index].sname
+                                              +"\n Phone  : "+snapshot.data[index].phone
+                                              +"\n Email   : "+snapshot.data[index].email,
+                                            style: TextStyle(color: Colors.blue.withOpacity(0.6)),
+                                          ),
+                                        ],
                                       ),
                                     ),
 
                                     Image.network("http://"+ips+":5000/"+snapshot.data[index].photo),
-                                    // ButtonBar(
-                                    //   alignment: MainAxisAlignment.start,
-                                    //   children: [
-                                    //     ElevatedButton(
-                                    //       onPressed: () async{
-                                    //         final pref = await SharedPreferences.getInstance();
-                                    //         String asid=snapshot.data[index].assign_id;
-                                    //         pref.setString("asid", asid);
-                                    //         Navigator.push(context, MaterialPageRoute(builder: (context)=>StaffViewRating()));
-                                    //
-                                    //       },
-                                    //       child: const Text('Ratings'),
-                                    //     ),
-                                    //   ],
-                                    // ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Text("Share Delivary rating",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.amber
+                                        ),
+                                        ),
+                                      ),
+                                      RatingBar.builder(
+                                        initialRating: _rating ?? 0.0,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: false,
+                                        itemCount: 5,
+                                        itemSize: 50,
+                                        itemPadding: const EdgeInsets.symmetric(horizontal: 8),
+                                        itemBuilder: (context, _) => Icon(
+                                          _selectedIcon ?? Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (rating) {
+
+                                          setState(() {
+                                            _rating = rating;
+                                          });
+                                        },
+                                      ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        child: TextField( controller: Review, decoration: InputDecoration( hintText: 'Review'),),
+                                      ),
+                                    ),
+
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ElevatedButton(onPressed: (){
+                                        if(snapshot.data[index].status == 'delivered')
+                                        {
+                                          Review_v=Review.text;
+                                          asid=snapshot.data[index].assign_id.toString();
+                                          review(Review_v,asid,_rating.toString());
+                                        }
+                                      }, child: Text("Share")),
+                                    ),
+
+
                                   ],
                                 ),
                               ),
@@ -185,18 +246,18 @@ class _DeliveryStatusPageState extends State<DeliveryStatusPage> {
   }
 }
 class ViewPreviousOrder {
-  late final naame ;
-  late final phone ;
-  late final place ;
-  late final post ;
-  late final pin ;
-  late final photo ;
-  late final product_name ;
-  late final qty ;
-  late final price ;
-  late final assign_id ;
-  late final order_id;
 
-  ViewPreviousOrder(this.naame,this.phone,this.place,this.post,this.pin,this.photo,this.product_name,this.qty,this.price,this.assign_id,this.order_id);
+  late final sname ;
+  late final phone ;
+  late final email ;
+  late final product_name ;
+  late final price ;
+  late final String photo ;
+  late final qty ;
+  late final status ;
+  late final assign_id ;
+
+
+  ViewPreviousOrder(this.phone,this.status,this.photo,this.product_name,this.price,this.sname,this.email,this.assign_id);
 }
 

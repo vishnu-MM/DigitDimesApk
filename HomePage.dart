@@ -172,6 +172,29 @@ class _UserHomePageState extends State<UserHomePage> {
               title: Row(
                 children: [
                   Icon(
+                    Icons.photo_camera_rounded,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Scan Product",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new CounFeit(),
+                ),
+              );
+            },),
+
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
                     Icons.category,
                     color: Colors.teal,
                   ),
@@ -215,6 +238,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
               );
             },),
+
             ListTile(
               title: Row(
                 children: [
@@ -238,75 +262,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 ),
               );
             },),
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(
-                    Icons.person_rounded,
-                    color: Colors.teal,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Profile",
-                      style: TextStyle(
-                          fontSize: 18
-                      ),
-                    ),
-                  ),
-                ],
-              ) , onTap: (){
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ProfilePage(title: "Profile"),
-                ),
-              );
-            },),
 
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(
-                    Icons.message,
-                    color: Colors.teal,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Reply",style: TextStyle(
-                        fontSize: 18
-                    ),),
-                  ),
-                ],
-              ) , onTap: (){
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ReplyPage(title: "Reply"),
-                ),
-              );
-            },),
-            ListTile(
-              title: Row(
-                children: [
-                  Icon(
-                    Icons.photo_camera_rounded,
-                    color: Colors.teal,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Scan Product",style: TextStyle(
-                        fontSize: 18
-                    ),),
-                  ),
-                ],
-              ) , onTap: (){
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new CounFeit(),
-                ),
-              );
-            },),
             ListTile(
               title: Row(
                 children: [
@@ -333,6 +289,31 @@ class _UserHomePageState extends State<UserHomePage> {
               title: Row(
                 children: [
                   Icon(
+                    Icons.person_rounded,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("My Profile",
+                      style: TextStyle(
+                          fontSize: 18
+                      ),
+                    ),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ProfilePage(title: "Profile"),
+                ),
+              );
+            },),
+
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
                     Icons.comments_disabled_outlined,
                     color: Colors.teal,
                   ),
@@ -348,6 +329,28 @@ class _UserHomePageState extends State<UserHomePage> {
                 context,
                 new MaterialPageRoute(
                   builder: (context) => new ComplaintPage(title: 'Complaint'),
+                ),
+              );
+            },),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(
+                    Icons.message,
+                    color: Colors.teal,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Reply",style: TextStyle(
+                        fontSize: 18
+                    ),),
+                  ),
+                ],
+              ) , onTap: (){
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ReplyPage(title: "Reply"),
                 ),
               );
             },),

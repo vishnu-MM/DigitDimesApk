@@ -67,14 +67,12 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
     String ip = pref.getString("ip").toString();
     String uid=pref.getString("lid").toString();
     var data = await http.post(Uri.parse("http://" + ip + ":5000/view_my_order_post"),body: {"lid":uid});
-    print("------------------------------hoiiiiiii---------------");
-    print(data);
+
     var jsonData = json.decode(data.body);
     setState(() {
       ips=ip.toString();
     });
 
-    print(jsonData);
     List<ViewMyOrders_> clist_ = [];
     for (var nn in jsonData["data"]) {
       ViewMyOrders_ newname_ =
@@ -85,25 +83,25 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   }
 
   //Update status
-  delivered(String ida) async {
-    final pref=await SharedPreferences.getInstance();
-    String ip= pref.getString("ip").toString();
-    String uid=pref.getString("lid").toString();
-    String pid=pref.getString("pid_s").toString();
-    print("-----ip");
-    print(ip);
-    var data = await http.post(Uri.parse("http://"+ip+":5000/view_my_order_post"),body: {"lid":uid});
-    var jsondata = json.decode(data.body);
-    print(jsondata);
-
-    String status = jsondata['status'];
-    if(status=="ok")
-    {
-      String lid_s=jsondata["lid"].toString();
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString("lid", lid_s);
-    }
-  }
+  // delivered(String ida) async {
+  //   final pref=await SharedPreferences.getInstance();
+  //   String ip= pref.getString("ip").toString();
+  //   String uid=pref.getString("lid").toString();
+  //   String pid=pref.getString("pid_s").toString();
+  //   print("-----ip");
+  //   print(ip);
+  //   var data = await http.post(Uri.parse("http://"+ip+":5000/view_my_order_post"),body: {"lid":uid});
+  //   var jsondata = json.decode(data.body);
+  //   print(jsondata);
+  //
+  //   String status = jsondata['status'];
+  //   if(status=="ok")
+  //   {
+  //     String lid_s=jsondata["lid"].toString();
+  //     final prefs = await SharedPreferences.getInstance();
+  //     prefs.setString("lid", lid_s);
+  //   }
+  // }
 
 
 
@@ -192,6 +190,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                                               ]),
                                             ]),
                                         OutlinedButton(onPressed: () async {
+                                          print("data :"+snapshot.data[index].order_id);
                                           oid=snapshot.data[index].order_id;
                                           final prefs = await SharedPreferences.getInstance();
                                           prefs.setString("oid", oid);
